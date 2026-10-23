@@ -1,0 +1,66 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink-950: #050814;
+  --color-ink-900: #0a1022;
+  --color-ink-800: #101a38;
+  --color-ink-700: #1a2850;
+  --color-ink-600: #2b3c70;
+  --color-volt: #5b8cff;
+  --color-violet: #a07bff;
+  --color-teal: #2de2c4;
+  --color-ember: #ff8f45;
+  --font-display: 'Avenir Next', 'Helvetica Neue', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-ink-950);
+  color: #e8ecfa;
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Subtle blueprint grid behind everything */
+.blueprint {
+  background-image:
+    linear-gradient(rgba(91, 140, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(91, 140, 255, 0.06) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+.flow-dash {
+  stroke-dasharray: 6 6;
+  animation: dash-flow 1.2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-dash {
+    animation: none;
+  }
+}
