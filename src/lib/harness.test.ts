@@ -150,6 +150,13 @@ describe('content integrity', () => {
     expect(p.tiles.length).toBeLessThanOrEqual(4)
   })
 
+  it('Find the Connection is picture-only', () => {
+    for (const p of PUZZLES) {
+      expect(p.kind, p.id).toBe('rebus')
+      expect(p.tiles.every((t) => t.image && !t.icon), p.id).toBe(true)
+    }
+  })
+
   it('has unique ids', () => {
     for (const bank of [SCENARIOS, PUZZLES, BONUS_QUESTIONS]) {
       expect(new Set(bank.map((x) => x.id)).size).toBe(bank.length)

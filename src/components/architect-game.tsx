@@ -104,7 +104,8 @@ export function ArchitectGame({ scenario, round, onComplete }: Props) {
             animate={{ opacity: 1, height: 'auto' }}
             className="overflow-hidden rounded-xl border border-ember/40 bg-ember/10 px-4 py-3 text-lg text-orange-100"
           >
-            💡 {scenario.hint}
+            <Lightbulb className="mr-2 inline h-5 w-5 align-text-bottom text-ember" aria-hidden />
+            {scenario.hint}
           </motion.p>
         )}
       </AnimatePresence>

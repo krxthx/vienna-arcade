@@ -73,15 +73,12 @@ export interface HarnessResult {
 /* ---------- Game 2: Find the Connection ---------- */
 
 export interface ClueTile {
-  /** Connection puzzles: the visible clue. Picture puzzles: alt text only, never shown. */
+  /** Picture puzzles: alt text only, never shown. Text puzzles: the visible clue. */
   label: string
+  /** Text puzzles only. */
   icon?: IconKey
-  /** Picture puzzles: image, e.g. '/puzzles/corn.png' (file in public/puzzles/). Wins over `glyph`. */
+  /** Picture puzzles: image, e.g. '/puzzles/corn.png' (file in public/puzzles/). */
   image?: string
-  /** Picture puzzles: emoji stand-in used until an image is supplied. */
-  glyph?: string
-  /** Picture puzzles: optional visible text for a clue a picture can't carry (a quote, say). */
-  caption?: string
 }
 
 export interface Puzzle {

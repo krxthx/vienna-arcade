@@ -1,4 +1,4 @@
-import { Clock, Home, Lightbulb, RotateCcw, Sparkles, Trophy } from 'lucide-react'
+import { Check, Clock, Home, Lightbulb, RotateCcw, Sparkles, Trophy, X } from 'lucide-react'
 import { motion } from 'motion/react'
 import { QUIZ_POINTS_LABEL } from '../lib/leaderboard'
 import { formatDuration } from '../lib/format'
@@ -68,11 +68,12 @@ export function Results({ outcome, quiz, playerName, rank, total, seconds, onLea
         {outcome.rounds.map((r, i) => (
           <li
             key={i}
-            className={`rounded-lg border px-3 py-1 text-sm font-semibold ${
+            className={`inline-flex items-center gap-1 rounded-lg border px-3 py-1 text-sm font-semibold ${
               isPassed(r.score) ? 'border-teal/60 text-teal' : 'border-ember/60 text-ember'
             }`}
           >
-            {isPassed(r.score) ? '✓' : '✗'} {r.label}
+            {isPassed(r.score) ? <Check className="h-4 w-4" aria-label="Passed" /> : <X className="h-4 w-4" aria-label="Missed" />}
+            {r.label}
           </li>
         ))}
       </ul>

@@ -65,15 +65,8 @@ export function ConnectionGame({ puzzle, round, onComplete }: Props) {
                 {rebus && tile.image && (
                   <img src={tile.image} alt={tile.label} draggable={false} className="h-full w-full rounded-xl object-contain" />
                 )}
-                {rebus && !tile.image && tile.glyph && (
-                  <span className="text-6xl leading-none sm:text-7xl" role="img" aria-label={tile.label}>
-                    {tile.glyph}
-                  </span>
-                )}
                 {!rebus && Icon && <Icon className="h-10 w-10 sm:h-12 sm:w-12" aria-hidden />}
-                {(rebus ? tile.caption : tile.label) && (
-                  <span className="text-xl font-black leading-tight text-white sm:text-2xl">{rebus ? tile.caption : tile.label}</span>
-                )}
+                {!rebus && <span className="text-xl font-black leading-tight text-white sm:text-2xl">{tile.label}</span>}
               </motion.div>
               </Fragment>
             )
@@ -85,7 +78,8 @@ export function ConnectionGame({ puzzle, round, onComplete }: Props) {
         <AnimatePresence>
           {hints >= 1 && !solved && (
             <motion.p key={hints} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="rounded-xl bg-ember/10 px-4 py-2">
-              💡 {puzzle.hints[hints - 1]}
+              <Lightbulb className="mr-2 inline h-5 w-5 align-text-bottom text-ember" aria-hidden />
+              {puzzle.hints[hints - 1]}
             </motion.p>
           )}
         </AnimatePresence>
