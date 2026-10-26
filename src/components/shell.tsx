@@ -1,9 +1,12 @@
 import { Gamepad2, Home, RotateCcw } from 'lucide-react'
 import { MotionConfig } from 'motion/react'
+import { ElapsedTimer } from './elapsed-timer'
 import type { ReactNode } from 'react'
 
 interface ShellProps {
   children: ReactNode
+  /** When set, a running timer is shown in the header. */
+  timerStart?: number
   onHome?: () => void
   onRestart?: () => void
 }
@@ -11,7 +14,7 @@ interface ShellProps {
 const navButton =
   'inline-flex min-h-12 items-center gap-2 rounded-xl border border-ink-600 bg-ink-800 px-4 font-semibold text-slate-100 transition hover:border-volt hover:bg-ink-700 active:scale-95'
 
-export function Shell({ children, onHome, onRestart }: ShellProps) {
+export function Shell({ children, timerStart, onHome, onRestart }: ShellProps) {
   return (
     <MotionConfig reducedMotion="user">
         <div className="blueprint relative flex min-h-full flex-col bg-ink-950">
@@ -21,6 +24,7 @@ export function Shell({ children, onHome, onRestart }: ShellProps) {
               <span className="font-mono text-sm font-bold tracking-[0.25em] text-slate-300">AI ARCADE</span>
             </div>
             <nav className="flex items-center gap-2" aria-label="Game controls">
+              {timerStart !== undefined && <ElapsedTimer startedAt={timerStart} />}
               {onRestart && (
                 <button type="button" className={navButton} onClick={onRestart}>
                   <RotateCcw className="h-5 w-5" aria-hidden /> Restart

@@ -1,4 +1,4 @@
-import { Clock, Play, Zap } from 'lucide-react'
+import { Clock, Play } from 'lucide-react'
 import { motion } from 'motion/react'
 import type { ReactNode } from 'react'
 import type { GameInfo } from '../content/games'
@@ -10,8 +10,6 @@ interface GameCardProps {
   onPlay: () => void
   index: number
 }
-
-const DIFFICULTY_LABEL = ['Easy', 'Medium', 'Hard']
 
 export function GameCard({ game, illustration, onPlay, index }: GameCardProps) {
   const a = ACCENT[game.accent]
@@ -28,22 +26,8 @@ export function GameCard({ game, illustration, onPlay, index }: GameCardProps) {
         <p className={`font-mono text-sm font-bold tracking-[0.2em] ${a.text}`}>GAME {game.number}</p>
         <h2 className="text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl">{game.title}</h2>
         <p className="text-lg text-slate-300">{game.tagline}</p>
-        <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-2 pt-2 text-slate-300">
-          <span className="flex items-center gap-2" aria-label={`Difficulty: ${DIFFICULTY_LABEL[game.difficulty - 1]}`}>
-            <span className="flex">
-              {[1, 2, 3].map((n) => (
-                <Zap
-                  key={n}
-                  aria-hidden
-                  className={`h-5 w-5 ${n <= game.difficulty ? `${a.text} fill-current` : 'text-ink-600'}`}
-                />
-              ))}
-            </span>
-            {DIFFICULTY_LABEL[game.difficulty - 1]}
-          </span>
-          <span className="flex items-center gap-2">
-            <Clock className="h-5 w-5" aria-hidden /> {game.duration}
-          </span>
+        <div className="mt-auto flex items-center gap-2 pt-2 text-slate-300">
+          <Clock className="h-5 w-5" aria-hidden /> {game.duration}
         </div>
         <button
           type="button"

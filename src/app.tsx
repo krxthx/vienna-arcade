@@ -36,12 +36,12 @@ function App() {
   const [playerEmail, setPlayerEmail] = useState('')
   const runs = useRef(0)
   const submitting = useRef(false)
-  // When the current play session began (after the name screen), for the time-taken tiebreaker.
-  const startedAt = useRef(0)
+  // When the current play session began (after the name screen): drives the visible timer and the tiebreaker.
+  const [startedAt, setStartedAt] = useState(0)
 
   const start = useCallback((game: GameId) => {
     const run = ++runs.current
-    startedAt.current = Date.now()
+    setStartedAt(Date.now())
     if (game === 'architect') {
       setScreen({ name: 'architect', rounds: pickMany(SCENARIOS, ROUNDS_PER_GAME), index: 0, scores: [], run })
     } else {
@@ -72,7 +72,7 @@ function App() {
     if (submitting.current) return
     submitting.current = true
     const quizCorrect = quiz.skipped ? 0 : quiz.correct
-    const seconds = Math.min(24 * 60 * 60, Math.round((Date.now() - startedAt.current) / 1000))
+    const seconds = Math.min(24 * 60 * 60, Math.round((Date.now() - startedAt) / 1000))
     const base = { outcome, quiz, seconds, total: totalScore(outcome.passed, quizCorrect) }
     try {
       const saved = await submitScore({
@@ -110,10 +110,13 @@ function App() {
     }
   }, [isHome, goHome])
 
+  // The timer runs from the first round until the quiz is finished.
+  const timing = screen.name === 'architect' || screen.name === 'connect' || screen.name === 'quiz'
   const restartable = screen.name === 'architect' || screen.name === 'connect'
 
   return (
     <Shell
+      timerStart={timing ? startedAt : undefined}
       onHome={isHome ? undefined : goHome}
       onRestart={restartable ? () => start(screen.name as GameId) : undefined}
     >

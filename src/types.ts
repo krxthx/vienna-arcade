@@ -73,23 +73,24 @@ export interface HarnessResult {
 /* ---------- Game 2: Find the Connection ---------- */
 
 export interface ClueTile {
-  /** Picture puzzles: alt text only, never shown. Text puzzles: the visible clue. */
+  /** Alt text only. It is never shown on screen, since it would give the answer away. */
   label: string
-  /** Text puzzles only. */
-  icon?: IconKey
-  /** Picture puzzles: image, e.g. '/puzzles/corn.png' (file in public/puzzles/). */
-  image?: string
+  /** Image under public/, e.g. '/puzzles/corn.jpeg'. */
+  image: string
 }
 
 export interface Puzzle {
   id: string
   topic: string
-  /** 'rebus': picture clues whose names, said aloud in order, spell an AI term (corn + text + window). */
-  kind?: 'connection' | 'rebus'
+  /** Picture clues: say them aloud, in order, to get the term (corn + text + window). */
   tiles: ClueTile[]
+  /** The answer players type. Matching ignores case, spaces and hyphens, and forgives small typos. */
   answer: string
-  distractors: [string, string]
-  /** Hint 1 names the area; hint 2 also removes one wrong answer. */
+  /** Other wordings to accept, such as abbreviations ("HITL") or spelling variants. */
+  accept?: string[]
+  /** Near misses that must NOT be accepted even though they are close to the answer. */
+  reject?: string[]
+  /** Hint 1 names the area; hint 2 comes with a fill-in-the-blanks pattern of the answer. */
   hints: [string, string]
   explanation: string
   difficulty: Difficulty

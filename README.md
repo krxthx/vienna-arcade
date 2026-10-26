@@ -58,21 +58,31 @@ All content is typed data, with no UI changes needed:
 
 ## Picture puzzles
 
-Picture ("rebus") puzzles show only pictures; players say them aloud to spell an AI term (corn + texting + Windows logo = "con" + "text" + "window" = Context Window). Put image files in `public/puzzles/` (PNG, JPG, SVG or WebP, ideally square, around 400px) and reference them in `src/content/puzzles.ts`:
+Find the Connection is picture-only and **free-text**: players see 1–4 pictures, say them aloud in order, and type the AI term (corn + texts + window = "con" + "text" + "window" = Context Window). Put image files in `public/puzzles/` and add a puzzle to `src/content/puzzles.ts`:
 
 ```ts
-tiles: [{ image: '/puzzles/corn.png', label: 'Corn' }, { image: '/puzzles/text.png', label: 'Someone texting' }]
+{
+  id: 'rebus-context-window',
+  topic: 'Context engineering',
+  tiles: [pic('corn.jpeg', 'Corn'), pic('chat-bubbles.jpeg', 'Text messages'), pic('window.jpeg', 'A window')],
+  answer: 'Context Window',
+  accept: ['CW'],              // optional extra wordings (abbreviations, variants)
+  reject: ['Context Rot'],     // optional near-misses that must NOT count
+  hints: ['How much text a model can read at once.', 'Say them out loud: “con” + “text” + “window”.'],
+  explanation: '...',
+  difficulty: 1,
+}
 ```
 
-`label` is alt text only and is never shown. Tiles without an `image` fall back to their emoji `glyph`. Use `caption` for a clue a picture can't carry, such as a quote. Make sure you have the rights to use any image you add.
+Answers are matched forgivingly (`src/lib/answer-match.ts`): case, spaces, hyphens and punctuation are ignored, and small typos are allowed in proportion to the answer's length (none for 3 letters or fewer, 1 up to 8, 2 up to 14, 3 beyond). Use `reject` when a wrong answer is close enough to slip through (for example "Benchmarking" for "Benchmaxing"). A test checks that no puzzle's answer is accepted by any other puzzle. Hint 2 also shows a fill-in-the-blanks pattern (`C______ W_____`), and "Show answer" gives up the round for 0. `label` on a picture is alt text only and is never shown. Make sure you have the rights to use any image you add.
 
 ## Scoring
 
 Each game is 10 random rounds (`ROUNDS_PER_GAME` in `src/content/games.ts`), then a 4-question Vienna quiz (`QUIZ_LENGTH`).
 
-A round is **passed** at a score of 85+: a harness mission earns "Harness Approved", and a connection puzzle needs no wrong guesses and at most one hint. Per round, the harness score is the share of the mission's needs covered, minus 15 per unneeded part; optional extras are never penalised and order doesn't matter. A connection puzzle starts at 100, minus 25 per wrong guess and 10 per hint.
+A round is **passed** at a score of 85+: a harness mission earns "Harness Approved", and a connection puzzle needs no wrong guesses and at most one hint. Per round, the harness score is the share of the mission's needs covered, minus 15 per unneeded part; optional extras are never penalised and order doesn't matter. A connection puzzle starts at 100, minus 25 per wrong guess and 10 per hint (0 if the answer is revealed).
 
-**Leaderboard points** = rounds passed (of 10) + quiz answers right (of 4), so 14 at most. Players with equal points are ranked by **faster time** (from the first round to the end of the quiz). Time never adds points, so there's no reason to rush.
+**Leaderboard points** = rounds passed (of 10) + quiz answers right (of 4), so 14 at most. Players with equal points are ranked by **faster time** (from the first round to the end of the quiz). A running timer is shown from the first round until the quiz ends. It counts up, never down, and never adds or removes points, so there's no reason to rush.
 
 ## Booth details
 

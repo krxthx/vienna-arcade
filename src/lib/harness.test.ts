@@ -144,17 +144,15 @@ describe('content integrity', () => {
     expect(evaluateHarness(s, [...perfect, ...emptySlots(s.sockets - perfect.length)]).score).toBe(100)
   })
 
-  it.each(PUZZLES)('puzzle $id has distinct answer and choices', (p) => {
-    expect(new Set([p.answer, ...p.distractors]).size).toBe(3)
+  it.each(PUZZLES)('puzzle $id is well-formed', (p) => {
     expect(p.tiles.length).toBeGreaterThanOrEqual(1)
     expect(p.tiles.length).toBeLessThanOrEqual(4)
+    expect(p.hints).toHaveLength(2)
+    expect(p.answer.length).toBeGreaterThan(2)
   })
 
   it('Find the Connection is picture-only', () => {
-    for (const p of PUZZLES) {
-      expect(p.kind, p.id).toBe('rebus')
-      expect(p.tiles.every((t) => t.image && !t.icon), p.id).toBe(true)
-    }
+    for (const p of PUZZLES) expect(p.tiles.every((t) => t.image), p.id).toBe(true)
   })
 
   it('has unique ids', () => {

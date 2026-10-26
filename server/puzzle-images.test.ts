@@ -9,10 +9,4 @@ describe('picture puzzles', () => {
       .map((t) => t.image)
     expect(missing).toEqual([])
   })
-
-  it('picture puzzles use images for every tile', () => {
-    for (const p of PUZZLES.filter((x) => x.kind === 'rebus')) {
-      expect(p.tiles.every((t) => t.image), p.id).toBe(true)
-    }
-  })
 })
