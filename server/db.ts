@@ -1,9 +1,10 @@
 import { DatabaseSync } from 'node:sqlite'
-import { totalScore, type LeaderboardEntry, type Submission } from '../src/lib/leaderboard.ts'
+import { totalScore, type AdminEntry, type LeaderboardEntry, type Submission } from '../src/lib/leaderboard.ts'
 
 interface Row {
   id: number
   name: string
+  email: string
   game: 'architect' | 'connect'
   rounds_passed: number
   rounds_total: number
@@ -14,6 +15,7 @@ interface Row {
   at: number
 }
 
+/** Public shape: deliberately has no email. */
 const toEntry = (r: Row): LeaderboardEntry => ({
   id: String(r.id),
   name: r.name,
@@ -27,6 +29,8 @@ const toEntry = (r: Row): LeaderboardEntry => ({
   at: r.at,
 })
 
+const toAdminEntry = (r: Row): AdminEntry => ({ ...toEntry(r), email: r.email })
+
 export function openScoreDb(path: string) {
   const db = new DatabaseSync(path)
   db.exec('PRAGMA journal_mode = WAL;')
@@ -37,10 +41,17 @@ export function openScoreDb(path: string) {
     db.exec('DROP TABLE IF EXISTS scores_old; ALTER TABLE scores RENAME TO scores_old; DROP INDEX IF EXISTS scores_rank;')
   }
 
+  // Layout from before emails existed: add the column in place so no scores are lost.
+  const current = (db.prepare('PRAGMA table_info(scores)').all() as { name: string }[]).map((c) => c.name)
+  if (current.length > 0 && !current.includes('email')) {
+    db.exec("ALTER TABLE scores ADD COLUMN email TEXT NOT NULL DEFAULT ''")
+  }
+
   db.exec(`
     CREATE TABLE IF NOT EXISTS scores (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
+      email TEXT NOT NULL DEFAULT '',
       game TEXT NOT NULL CHECK (game IN ('architect', 'connect')),
       rounds_passed INTEGER NOT NULL,
       rounds_total INTEGER NOT NULL,
@@ -54,7 +65,7 @@ export function openScoreDb(path: string) {
   `)
 
   const insert = db.prepare(
-    'INSERT INTO scores (name, game, rounds_passed, rounds_total, quiz_correct, quiz_total, total, seconds, at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING *',
+    'INSERT INTO scores (name, email, game, rounds_passed, rounds_total, quiz_correct, quiz_total, total, seconds, at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING *',
   )
   const list = db.prepare('SELECT * FROM scores ORDER BY total DESC, seconds ASC, at ASC, id ASC LIMIT ?')
   const rank = db.prepare(`SELECT COUNT(*) AS ahead FROM scores WHERE
@@ -64,7 +75,7 @@ export function openScoreDb(path: string) {
   return {
     add(s: Submission, at = Date.now()): { entry: LeaderboardEntry; rank: number } {
       const total = totalScore(s.roundsPassed, s.quizCorrect)
-      const row = insert.get(s.name, s.game, s.roundsPassed, s.roundsTotal, s.quizCorrect, s.quizTotal, total, s.seconds, at) as unknown as Row
+      const row = insert.get(s.name, s.email, s.game, s.roundsPassed, s.roundsTotal, s.quizCorrect, s.quizTotal, total, s.seconds, at) as unknown as Row
       const { ahead } = rank.get(
         row.total, row.total, row.seconds, row.total, row.seconds, row.at, row.total, row.seconds, row.at, row.id,
       ) as { ahead: number }
@@ -72,6 +83,10 @@ export function openScoreDb(path: string) {
     },
     top(limit = 200): LeaderboardEntry[] {
       return (list.all(limit) as unknown as Row[]).map(toEntry)
+    },
+    /** Everything including emails. Organizer-only: never expose through a public route. */
+    topWithEmail(limit = 100000): AdminEntry[] {
+      return (list.all(limit) as unknown as Row[]).map(toAdminEntry)
     },
     count(): number {
       return (count.get() as { n: number }).n

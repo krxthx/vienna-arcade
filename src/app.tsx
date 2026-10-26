@@ -33,6 +33,7 @@ function App() {
   const [screen, setScreen] = useState<Screen>({ name: 'home' })
   // Held in memory for the current visitor only; cleared when returning home.
   const [playerName, setPlayerName] = useState('')
+  const [playerEmail, setPlayerEmail] = useState('')
   const runs = useRef(0)
   const submitting = useRef(false)
   // When the current play session began (after the name screen), for the time-taken tiebreaker.
@@ -50,6 +51,7 @@ function App() {
 
   const goHome = useCallback(() => {
     setPlayerName('')
+    setPlayerEmail('')
     setScreen({ name: 'home' })
   }, [])
 
@@ -75,6 +77,7 @@ function App() {
     try {
       const saved = await submitScore({
         name: playerName,
+        email: playerEmail,
         game: outcome.game,
         roundsPassed: outcome.passed,
         roundsTotal: outcome.rounds.length,
@@ -124,9 +127,11 @@ function App() {
         <NameEntry
           gameTitle={GAMES.find((g) => g.id === screen.game)!.title}
           initialName={playerName}
+          initialEmail={playerEmail}
           onBack={goHome}
-          onSubmit={(name) => {
+          onSubmit={(name, email) => {
             setPlayerName(name)
+            setPlayerEmail(email)
             start(screen.game)
           }}
         />

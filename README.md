@@ -1,6 +1,6 @@
 # The Applied AI Arcade
 
-A booth-friendly arcade with two mini-games about Applied AI. Each play is 10 random rounds, with a name prompt first, a 4-question Vienna quiz after it, and a results screen. Scores go to a SQLite database through a tiny Node server, so several devices can share one leaderboard. There are no accounts, and no external services or network calls.
+A booth-friendly arcade with two mini-games about Applied AI. Each play is 10 random rounds, with a name and email prompt first, a 4-question Vienna quiz after it, and a results screen. Scores go to a SQLite database through a tiny Node server, so several devices can share one leaderboard. There are no accounts, and no external services or network calls.
 
 - **Architect the Agent** – read a plain-language mission, plug parts into a harness around the model (drag, or tap then tap), then run a deterministic evaluation.
 - **Find the Connection** – spot what links four clues; optional progressive hints.
@@ -37,7 +37,7 @@ Open `http://localhost:3001` on that machine, and `http://<that-machine's-LAN-IP
 | `DB_PATH` | SQLite file location | `data/arcade.db` |
 | `ADMIN_KEY` | Key needed to clear all scores from the Organizer panel. **Set this when hosting behind a proxy.** | unset: only direct requests from the server machine itself may clear |
 
-Organizer tools are behind the small "Organizer" link on the leaderboard: export CSV (`/api/scores.csv`) and clear all scores. Back up by copying `data/arcade.db`. If the server is unreachable, games still play and the results screen says the score wasn't saved.
+Organizer tools are behind the small "Organizer" link on the leaderboard: export CSV (includes emails) and clear all scores. Both need the `ADMIN_KEY` (or a request from the server machine itself). Back up by copying `data/arcade.db`. If the server is unreachable, games still play and the results screen says the score wasn't saved.
 
 ## Deployment
 
@@ -76,4 +76,4 @@ A round is **passed** at a score of 85+: a harness mission earns "Harness Approv
 
 ## Booth details
 
-Drag-and-drop uses pointer events (mouse, pen and touch), with a tap-to-select fallback and full keyboard support. The app returns to the home screen after 3 minutes of inactivity. The player's name is held in memory during a visit and cleared on return to the home screen. It's stored only when the visitor finishes, as a leaderboard row (name, game, scores, time). Points are computed on the server.
+Drag-and-drop uses pointer events (mouse, pen and touch), with a tap-to-select fallback and full keyboard support. The app returns to the home screen after 3 minutes of inactivity. The player's name is held in memory during a visit and cleared on return to the home screen. It's stored only when the visitor finishes, as a leaderboard row (name, **email**, game, scores, time). The email is never shown on the leaderboard and never returned by the public `/api/scores` route; it appears only in the organizer CSV. Points are computed on the server.

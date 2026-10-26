@@ -1,7 +1,7 @@
 import { Download, Medal, Trash2, Wrench } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import { GAMES } from '../content/games'
-import { clearScores, fetchScores } from '../lib/api'
+import { clearScores, fetchCsv, fetchScores } from '../lib/api'
 import { formatDuration } from '../lib/format'
 import { QUIZ_POINTS_LABEL, sortEntries, type LeaderboardEntry } from '../lib/leaderboard'
 import type { GameId } from '../types'
@@ -22,6 +22,7 @@ export function Leaderboard({ highlightId, onBack }: Props) {
   const [confirmClear, setConfirmClear] = useState(false)
   const [adminKey, setAdminKey] = useState('')
   const [clearError, setClearError] = useState(false)
+  const [exportError, setExportError] = useState(false)
 
   const load = useCallback(() => {
     fetchScores().then(
@@ -39,6 +40,21 @@ export function Leaderboard({ highlightId, onBack }: Props) {
   const highlightRank = highlightId ? shown.findIndex((e) => e.id === highlightId) : -1
   const gameName = (id: GameId) => GAMES.find((g) => g.id === id)?.title ?? id
   const count = entries?.length ?? 0
+
+  const exportCsv = async () => {
+    try {
+      const csv = await fetchCsv(adminKey)
+      const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }))
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `vienna-arcade-scores-${new Date().toISOString().slice(0, 10)}.csv`
+      a.click()
+      URL.revokeObjectURL(url)
+      setExportError(false)
+    } catch {
+      setExportError(true)
+    }
+  }
 
   const clearAll = async () => {
     try {
@@ -138,13 +154,13 @@ export function Leaderboard({ highlightId, onBack }: Props) {
       {organizer && (
         <div className="flex flex-wrap items-center justify-end gap-3 rounded-2xl border border-ink-700 bg-ink-900 p-4">
           <span className="mr-auto text-sm text-slate-400">{count} scores in the database</span>
-          <a
-            href="/api/scores.csv"
-            download
+          <button
+            type="button"
+            onClick={exportCsv}
             className="inline-flex min-h-12 items-center gap-2 rounded-xl border-2 border-ink-600 px-4 font-bold hover:border-volt"
           >
             <Download className="h-5 w-5" aria-hidden /> Export CSV
-          </a>
+          </button>
           <input
             type="password"
             value={adminKey}
@@ -172,6 +188,7 @@ export function Leaderboard({ highlightId, onBack }: Props) {
               <Trash2 className="h-5 w-5" aria-hidden /> Clear all
             </button>
           )}
+          {exportError && <p className="w-full text-right text-sm text-ember">Export needs the organizer key (or run it on the server machine).</p>}
           {clearError && <p className="w-full text-right text-sm text-ember">Not allowed. Check the organizer key, or clear from the server machine.</p>}
         </div>
       )}

@@ -72,8 +72,9 @@ const server = createServer(async (req, res) => {
   try {
     if (url === '/api/scores' && req.method === 'GET') return send(res, 200, db.top())
     if (url === '/api/scores.csv' && req.method === 'GET') {
+      if (!isAdmin(req)) return send(res, 403, { error: 'Organizer key required' })
       res.setHeader('content-disposition', 'attachment; filename="vienna-arcade-scores.csv"')
-      return send(res, 200, toCsv(db.top(100000)), 'text/csv')
+      return send(res, 200, toCsv(db.topWithEmail()), 'text/csv')
     }
     if (url === '/api/scores' && req.method === 'POST') {
       const submission = validateSubmission(await readBody(req))

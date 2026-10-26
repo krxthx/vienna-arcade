@@ -13,3 +13,10 @@ export const submitScore = (s: Submission) =>
 
 export const clearScores = (adminKey: string) =>
   request<{ ok: true }>('/api/scores', { method: 'DELETE', headers: adminKey ? { 'x-admin-key': adminKey } : {} })
+
+/** Organizer-only: fetches the CSV (includes emails) and returns it as text. */
+export async function fetchCsv(adminKey: string): Promise<string> {
+  const res = await fetch('/api/scores.csv', { headers: adminKey ? { 'x-admin-key': adminKey } : {} })
+  if (!res.ok) throw new Error(`${res.status}`)
+  return res.text()
+}

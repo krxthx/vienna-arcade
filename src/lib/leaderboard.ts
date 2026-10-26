@@ -16,9 +16,13 @@ export interface LeaderboardEntry {
   at: number
 }
 
+/** An entry as the organizer sees it: includes the player's email. Never sent to the public leaderboard. */
+export type AdminEntry = LeaderboardEntry & { email: string }
+
 /** What the client sends after a play session. The server computes the total. */
 export interface Submission {
   name: string
+  email: string
   game: GameId
   roundsPassed: number
   roundsTotal: number
@@ -28,6 +32,7 @@ export interface Submission {
 }
 
 export const MAX_NAME_LENGTH = 24
+export const MAX_EMAIL_LENGTH = 254
 /** One-line explanation of how players are ranked, shown on the results and leaderboard screens. */
 export const QUIZ_POINTS_LABEL = 'Points = rounds passed + quiz answers right. Ties go to the faster time.'
 const MAX_SECONDS = 24 * 60 * 60
@@ -35,6 +40,10 @@ const MAX_SECONDS = 24 * 60 * 60
 export function totalScore(roundsPassed: number, quizCorrect: number): number {
   return roundsPassed + quizCorrect
 }
+
+/** Pragmatic check: something@something.tld, no spaces. */
+export const isValidEmail = (email: string) =>
+  email.length <= MAX_EMAIL_LENGTH && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 
 const isInt = (v: unknown, min: number, max: number): v is number =>
   typeof v === 'number' && Number.isInteger(v) && v >= min && v <= max
@@ -45,12 +54,15 @@ export function validateSubmission(body: unknown): Submission | null {
   const b = body as Record<string, unknown>
   const name = typeof b.name === 'string' ? b.name.trim() : ''
   if (name.length < 1 || name.length > MAX_NAME_LENGTH) return null
+  const email = typeof b.email === 'string' ? b.email.trim().toLowerCase() : ''
+  if (!isValidEmail(email)) return null
   if (b.game !== 'architect' && b.game !== 'connect') return null
   if (!isInt(b.roundsTotal, 1, 50) || !isInt(b.roundsPassed, 0, b.roundsTotal)) return null
   if (!isInt(b.quizTotal, 0, 20) || !isInt(b.quizCorrect, 0, b.quizTotal)) return null
   if (!isInt(b.seconds, 0, MAX_SECONDS)) return null
   return {
     name,
+    email,
     game: b.game,
     roundsPassed: b.roundsPassed,
     roundsTotal: b.roundsTotal,
@@ -61,11 +73,11 @@ export function validateSubmission(body: unknown): Submission | null {
 }
 
 /** Most points first; then the faster time; then whoever finished earlier. */
-export function sortEntries(entries: readonly LeaderboardEntry[]): LeaderboardEntry[] {
+export function sortEntries<T extends LeaderboardEntry>(entries: readonly T[]): T[] {
   return [...entries].sort((a, b) => b.total - a.total || a.seconds - b.seconds || a.at - b.at)
 }
 
-export function toCsv(entries: readonly LeaderboardEntry[]): string {
+export function toCsv(entries: readonly AdminEntry[]): string {
   const esc = (v: string | number) => {
     // Neutralise spreadsheet formula injection from typed names.
     const s = String(v)
@@ -76,6 +88,7 @@ export function toCsv(entries: readonly LeaderboardEntry[]): string {
     [
       i + 1,
       e.name,
+      e.email,
       e.game,
       `${e.roundsPassed}/${e.roundsTotal}`,
       `${e.quizCorrect}/${e.quizTotal}`,
@@ -86,5 +99,5 @@ export function toCsv(entries: readonly LeaderboardEntry[]): string {
       .map(esc)
       .join(','),
   )
-  return ['rank,name,game,rounds,quiz,total,time_seconds,played_at', ...rows].join('\n')
+  return ['rank,name,email,game,rounds,quiz,total,time_seconds,played_at', ...rows].join('\n')
 }

@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import { formatDuration } from './format'
-import { sortEntries, toCsv, totalScore, validateSubmission, type LeaderboardEntry } from './leaderboard'
+import { isValidEmail, sortEntries, toCsv, totalScore, validateSubmission, type LeaderboardEntry } from './leaderboard'
 
 const entry = (name: string, total: number, seconds: number, at = 0): LeaderboardEntry => ({
   id: name, name, game: 'connect', roundsPassed: total, roundsTotal: 10, quizCorrect: 0, quizTotal: 4, total, seconds, at,
 })
-const ok = { name: ' Ada ', game: 'connect', roundsPassed: 8, roundsTotal: 10, quizCorrect: 3, quizTotal: 4, seconds: 400 }
+const ok = { name: ' Ada ', email: ' Ada@Example.com ', game: 'connect', roundsPassed: 8, roundsTotal: 10, quizCorrect: 3, quizTotal: 4, seconds: 400 }
 
 describe('leaderboard helpers', () => {
   it('totals rounds passed plus quiz answers right', () => {
@@ -20,6 +20,10 @@ describe('leaderboard helpers', () => {
 
   it('validates and trims submissions', () => {
     expect(validateSubmission(ok)?.name).toBe('Ada')
+    expect(validateSubmission(ok)?.email).toBe('ada@example.com')
+    expect(validateSubmission({ ...ok, email: 'not-an-email' })).toBeNull()
+    expect(validateSubmission({ ...ok, email: '' })).toBeNull()
+    expect(validateSubmission({ ...ok, email: undefined })).toBeNull()
     expect(validateSubmission({ ...ok, name: '   ' })).toBeNull()
     expect(validateSubmission({ ...ok, name: 'x'.repeat(25) })).toBeNull()
     expect(validateSubmission({ ...ok, game: 'other' })).toBeNull()
@@ -31,9 +35,17 @@ describe('leaderboard helpers', () => {
   })
 
   it('exports CSV with escaping and formula protection', () => {
-    const csv = toCsv([entry('=HYPERLINK("x"),hi', 10, 60)])
-    expect(csv.split('\n')[0]).toBe('rank,name,game,rounds,quiz,total,time_seconds,played_at')
+    const csv = toCsv([{ ...entry('=HYPERLINK("x"),hi', 10, 60), email: 'a@b.co' }])
+    expect(csv.split('\n')[0]).toBe('rank,name,email,game,rounds,quiz,total,time_seconds,played_at')
+    expect(csv).toContain(',a@b.co,')
     expect(csv).toContain('"\'=HYPERLINK(""x""),hi"')
+  })
+
+  it('checks email shape', () => {
+    expect(isValidEmail('a@b.co')).toBe(true)
+    expect(isValidEmail('a b@c.co')).toBe(false)
+    expect(isValidEmail('a@b')).toBe(false)
+    expect(isValidEmail('x'.repeat(250) + '@b.co')).toBe(false)
   })
 
   it('formats durations as m:ss', () => {

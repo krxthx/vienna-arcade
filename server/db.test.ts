@@ -6,7 +6,7 @@ import { join } from 'node:path'
 import { openScoreDb } from './db.ts'
 
 const sub = (name: string, roundsPassed: number, quizCorrect: number, seconds = 300) => ({
-  name, game: 'architect' as const, roundsPassed, roundsTotal: 10, quizCorrect, quizTotal: 4, seconds,
+  name, email: `${name.toLowerCase()}@example.com`, game: 'architect' as const, roundsPassed, roundsTotal: 10, quizCorrect, quizTotal: 4, seconds,
 })
 
 describe('score database', () => {
@@ -33,10 +33,31 @@ describe('score database', () => {
     expect(db.top(2)).toHaveLength(2)
   })
 
+  it('keeps emails out of the public list but available to the organizer', () => {
+    db.add(sub('Ada', 8, 3))
+    expect(JSON.stringify(db.top())).not.toContain('example.com')
+    expect(db.top()[0]).not.toHaveProperty('email')
+    expect(db.topWithEmail()[0].email).toBe('ada@example.com')
+  })
+
   it('clears everything', () => {
     db.add(sub('A', 1, 0))
     db.clear()
     expect(db.top()).toEqual([])
+  })
+
+  it('adds the email column to a pre-email database without losing scores', () => {
+    const file = join(mkdtempSync(join(tmpdir(), 'arcade-')), 'noemail.db')
+    const first = openScoreDb(file)
+    first.add(sub('Kept', 6, 2))
+    first.close()
+    const raw = new DatabaseSync(file)
+    raw.exec('ALTER TABLE scores DROP COLUMN email')
+    raw.close()
+    const upgraded = openScoreDb(file)
+    expect(upgraded.count()).toBe(1)
+    expect(upgraded.topWithEmail()[0].email).toBe('')
+    upgraded.close()
   })
 
   it('keeps an old-layout table aside instead of deleting it', () => {
