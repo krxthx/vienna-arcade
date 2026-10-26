@@ -1,6 +1,6 @@
 # The Applied AI Arcade
 
-A booth-friendly arcade with two 30–60 second mini-games about Applied AI, a name prompt before each game, a 5-question Vienna quiz after it, and a results screen. Scores go to a SQLite database through a tiny Node server, so several devices can share one leaderboard. There are no accounts, and no external services or network calls.
+A booth-friendly arcade with two mini-games about Applied AI. Each play is 10 random rounds, with a name prompt first, a 4-question Vienna quiz after it, and a results screen. Scores go to a SQLite database through a tiny Node server, so several devices can share one leaderboard. There are no accounts, and no external services or network calls.
 
 - **Architect the Agent** – read a plain-language mission, plug parts into a harness around the model (drag, or tap then tap), then run a deterministic evaluation.
 - **Find the Connection** – spot what links four clues; optional progressive hints.
@@ -35,7 +35,7 @@ Open `http://localhost:3001` on that machine, and `http://<that-machine's-LAN-IP
 | --- | --- | --- |
 | `PORT` | Server port | `3001` |
 | `DB_PATH` | SQLite file location | `data/arcade.db` |
-| `ADMIN_KEY` | Key needed to clear all scores from the Organizer panel | unset: only the server machine itself may clear |
+| `ADMIN_KEY` | Key needed to clear all scores from the Organizer panel. **Set this when hosting behind a proxy.** | unset: only direct requests from the server machine itself may clear |
 
 Organizer tools are behind the small "Organizer" link on the leaderboard: export CSV (`/api/scores.csv`) and clear all scores. Back up by copying `data/arcade.db`. If the server is unreachable, games still play and the results screen says the score wasn't saved.
 
@@ -52,7 +52,7 @@ All content is typed data, with no UI changes needed:
 | Harness scenarios (scoring rules, order rules, explanations) | `src/content/scenarios.ts` |
 | Harness components | `src/content/components.ts` |
 | Connection puzzles | `src/content/puzzles.ts` |
-| Vienna quiz questions (and `QUIZ_LENGTH`, currently 5) | `src/content/bonus.ts` |
+| Vienna quiz bank (20 now) and `QUIZ_LENGTH` (4) | `src/content/bonus.ts` |
 
 `src/lib/harness.test.ts` checks every scenario for consistency and that a perfect score is reachable, so mistakes in new content fail the tests.
 
@@ -68,8 +68,12 @@ tiles: [{ image: '/puzzles/corn.png', label: 'Corn' }, { image: '/puzzles/text.p
 
 ## Scoring
 
-Harness (0–100, deterministic): share of the mission's needs covered, −15 per unneeded part. Optional extras are never penalised, and order doesn't matter. Connection: 100, −25 per wrong guess, −10 per hint.
+Each game is 10 random rounds (`ROUNDS_PER_GAME` in `src/content/games.ts`), then a 4-question Vienna quiz (`QUIZ_LENGTH`).
+
+A round is **passed** at a score of 85+: a harness mission earns "Harness Approved", and a connection puzzle needs no wrong guesses and at most one hint. Per round, the harness score is the share of the mission's needs covered, minus 15 per unneeded part; optional extras are never penalised and order doesn't matter. A connection puzzle starts at 100, minus 25 per wrong guess and 10 per hint.
+
+**Leaderboard points** = rounds passed (of 10) + quiz answers right (of 4), so 14 at most. Players with equal points are ranked by **faster time** (from the first round to the end of the quiz). Time never adds points, so there's no reason to rush.
 
 ## Booth details
 
-Drag-and-drop uses pointer events (mouse, pen and touch), with a tap-to-select fallback and full keyboard support. The app returns to the home screen after 3 minutes of inactivity. The player's name is held in memory during a visit and cleared on return to the home screen. It's stored only when the visitor finishes, as a leaderboard row (name, game, scores, time). Total = game score (0–100) + 20 per correct quiz answer (max 200), computed on the server.
+Drag-and-drop uses pointer events (mouse, pen and touch), with a tap-to-select fallback and full keyboard support. The app returns to the home screen after 3 minutes of inactivity. The player's name is held in memory during a visit and cleared on return to the home screen. It's stored only when the visitor finishes, as a leaderboard row (name, game, scores, time). Points are computed on the server.

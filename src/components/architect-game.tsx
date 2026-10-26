@@ -5,8 +5,9 @@ import { HARNESS_COMPONENTS } from '../content/components'
 import { emptySlots, evaluateHarness, needsStatus, placeComponent, removeFromSlot, scenarioChoices } from '../lib/harness'
 import type { Slots } from '../lib/harness'
 import { architectOutcome } from '../lib/outcome'
+import { RoundProgress } from './round-progress'
 import { shuffle } from '../lib/random'
-import type { ComponentId, GameOutcome, Scenario } from '../types'
+import type { ComponentId, RoundScore, Scenario } from '../types'
 import { ComponentChip } from './component-chip'
 import { HarnessBoard } from './harness-board'
 import { HarnessResultPanel } from './harness-result-panel'
@@ -15,10 +16,11 @@ import { useDragDrop, type DragSource } from './use-drag-drop'
 
 interface Props {
   scenario: Scenario
-  onComplete: (outcome: GameOutcome) => void
+  round: { number: number; total: number }
+  onComplete: (round: RoundScore) => void
 }
 
-export function ArchitectGame({ scenario, onComplete }: Props) {
+export function ArchitectGame({ scenario, round, onComplete }: Props) {
   const [slots, setSlots] = useState<Slots>(() => emptySlots(scenario.sockets))
   const [selected, setSelected] = useState<ComponentId | null>(null)
   const [showHint, setShowHint] = useState(false)
@@ -65,7 +67,8 @@ export function ArchitectGame({ scenario, onComplete }: Props) {
         slots={evaluated.slots}
         result={evaluated.result}
         outcome={outcome}
-        onContinue={() => onComplete(outcome)}
+        continueLabel={round.number === round.total ? 'Finish' : 'Next round'}
+        onContinue={() => onComplete({ label: scenario.title, score: outcome.score })}
         onRetry={() => setEvaluated(null)}
       />
     )
@@ -75,7 +78,8 @@ export function ArchitectGame({ scenario, onComplete }: Props) {
     <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-4">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="max-w-4xl">
-          <p className="font-mono text-sm font-bold tracking-[0.2em] text-violet">
+          <RoundProgress number={round.number} total={round.total} />
+          <p className="mt-2 font-mono text-sm font-bold tracking-[0.2em] text-violet">
             ARCHITECT THE AGENT · {scenario.title.toUpperCase()}
           </p>
           <h1 className="mt-1 text-3xl font-black leading-tight text-white sm:text-4xl">“{scenario.job}”</h1>

@@ -1,7 +1,7 @@
 import type { BonusQuestion } from '../types'
 
-/** Number of questions asked at the end of each game. */
-export const QUIZ_LENGTH = 5
+/** Questions asked in each quiz, drawn at random from the bank below. */
+export const QUIZ_LENGTH = 4
 
 /**
  * Vienna quiz bank: general AI-evaluation concepts only, until product-specific
@@ -91,5 +91,61 @@ export const BONUS_QUESTIONS: BonusQuestion[] = [
     correct: 'Different use cases care about different strengths',
     wrong: ['One metric is always enough', 'It makes charts bigger'],
     explanation: 'A single number hides trade-offs such as accuracy versus speed versus safety.',
+  },
+  {
+    id: 'precision',
+    prompt: 'A spam filter marks many real emails as spam. Which metric suffers most?',
+    correct: 'Precision',
+    wrong: ['Latency', 'Context window'],
+    explanation: 'Precision asks: of everything flagged, how much was truly spam? Flagging real mail lowers it.',
+  },
+  {
+    id: 'rubric',
+    prompt: 'What is a rubric in model evaluation?',
+    correct: 'A checklist of criteria used to score answers',
+    wrong: ['A kind of GPU', 'A prompt that makes the model faster'],
+    explanation: 'Rubrics make grading consistent, whether a person or an LLM judge applies them.',
+  },
+  {
+    id: 'tail-latency',
+    prompt: 'Why track slow outliers (like p95 latency) and not just the average?',
+    correct: 'A few very slow responses can ruin the user experience',
+    wrong: ['Averages are not allowed in reports', 'Outliers make models more accurate'],
+    explanation: 'Averages hide the worst cases. Tail latency shows what your unluckiest users feel.',
+  },
+  {
+    id: 'baseline',
+    prompt: 'Why compare a new model against a baseline?',
+    correct: 'To see whether it is actually an improvement',
+    wrong: ['To make it train faster', 'To lower its cost automatically'],
+    explanation: 'A score only means something relative to something else, such as your current model.',
+  },
+  {
+    id: 'ab-prompts',
+    prompt: 'What does comparing two prompts on the same inputs tell you?',
+    correct: 'Which version performs better',
+    wrong: ['Which prompt is longer', 'How many GPUs you need'],
+    explanation: 'Changing one thing and holding the rest fixed is how you learn what really helped.',
+  },
+  {
+    id: 'safety',
+    prompt: 'Besides accuracy, what should you check before launching a chatbot?',
+    correct: 'Safety and harmful-output behavior',
+    wrong: ['The color of the UI', 'The length of the company name'],
+    explanation: 'Good evaluation covers quality, cost, speed and safety, not just correctness.',
+  },
+  {
+    id: 'repeatable',
+    prompt: 'Why should an evaluation be repeatable?',
+    correct: 'So results can be trusted and compared over time',
+    wrong: ['So models memorize the answers', 'So it uses more tokens'],
+    explanation: 'If you can’t rerun it and get the same setup, you can’t tell whether things improved.',
+  },
+  {
+    id: 'held-out',
+    prompt: 'Why keep a test set separate from the data a model learned from?',
+    correct: 'To measure performance on examples it hasn’t seen',
+    wrong: ['To make training faster', 'To enlarge the context window'],
+    explanation: 'Testing on unseen examples shows how the model handles new situations.',
   },
 ]

@@ -1,19 +1,21 @@
 import { ArrowRight, Check, Lightbulb } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { Fragment, useMemo, useState } from 'react'
-import { connectionOutcome } from '../lib/outcome'
+import { connectionScore } from '../lib/outcome'
+import { RoundProgress } from './round-progress'
 import { shuffle } from '../lib/random'
-import type { GameOutcome, Puzzle } from '../types'
+import type { Puzzle, RoundScore } from '../types'
 import { ICONS } from './icons'
 
 interface Props {
   puzzle: Puzzle
-  onComplete: (outcome: GameOutcome) => void
+  round: { number: number; total: number }
+  onComplete: (round: RoundScore) => void
 }
 
 const TILE_COLORS = ['border-teal text-teal', 'border-volt text-volt', 'border-ember text-ember', 'border-violet text-violet']
 
-export function ConnectionGame({ puzzle, onComplete }: Props) {
+export function ConnectionGame({ puzzle, round, onComplete }: Props) {
   const choices = useMemo(() => shuffle([puzzle.answer, ...puzzle.distractors]), [puzzle])
   const [hints, setHints] = useState(0)
   const [wrong, setWrong] = useState<string[]>([])
@@ -33,11 +35,12 @@ export function ConnectionGame({ puzzle, onComplete }: Props) {
 
   const rebus = puzzle.kind === 'rebus'
   const wrongCount = wrong.length
-  const finish = () => onComplete(connectionOutcome(puzzle, wrongCount, hints))
+  const finish = () => onComplete({ label: puzzle.answer, score: connectionScore(wrongCount, hints) })
 
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center gap-6">
-      <div className="text-center">
+      <div className="flex flex-col items-center text-center">
+        <RoundProgress number={round.number} total={round.total} className="mb-2" />
         <p className="font-mono text-sm font-bold tracking-[0.2em] text-teal">
           {rebus ? 'PICTURE PUZZLE' : 'FIND THE CONNECTION'}
         </p>
@@ -55,12 +58,12 @@ export function ConnectionGame({ puzzle, onComplete }: Props) {
                 initial={{ opacity: 0, y: 30, rotate: i % 2 ? 3 : -3 }}
                 animate={{ opacity: 1, y: 0, rotate: 0, scale: solved ? 1.03 : 1 }}
                 transition={{ delay: i * 0.1, type: 'spring', stiffness: 260, damping: 20 }}
-                className={`flex h-44 w-44 flex-col items-center justify-center gap-2 rounded-2xl border-2 bg-ink-900 px-3 text-center sm:h-52 sm:w-52 ${
+                className={`flex items-center justify-center gap-2 rounded-2xl border-2 bg-ink-900 text-center ${rebus ? `h-44 p-2 sm:h-52 ${puzzle.tiles.length >= 4 ? 'w-40 sm:w-44' : 'w-48 sm:h-60 sm:w-60'}` : 'h-36 w-44 flex-col px-3 sm:h-44 sm:w-52'} ${
                   solved ? TILE_COLORS[i] + ' shadow-[0_0_30px_-8px_currentColor]' : 'border-ink-600 text-white'
                 }`}
               >
                 {rebus && tile.image && (
-                  <img src={tile.image} alt={tile.label} draggable={false} className="h-28 w-full object-contain sm:h-32" />
+                  <img src={tile.image} alt={tile.label} draggable={false} className="h-full w-full rounded-xl object-contain" />
                 )}
                 {rebus && !tile.image && tile.glyph && (
                   <span className="text-6xl leading-none sm:text-7xl" role="img" aria-label={tile.label}>
@@ -105,7 +108,7 @@ export function ConnectionGame({ puzzle, onComplete }: Props) {
             onClick={finish}
             className="inline-flex min-h-16 items-center gap-3 rounded-2xl bg-teal px-8 text-xl font-black text-ink-950 hover:brightness-110 active:scale-95"
           >
-            Continue <ArrowRight className="h-6 w-6" aria-hidden />
+            {round.number === round.total ? 'Finish' : 'Next round'} <ArrowRight className="h-6 w-6" aria-hidden />
           </button>
         </motion.div>
       ) : (

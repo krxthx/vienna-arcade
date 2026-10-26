@@ -10,6 +10,7 @@ interface Props {
   slots: Slots
   result: HarnessResult
   outcome: GameOutcome
+  continueLabel: string
   onContinue: () => void
   onRetry: () => void
 }
@@ -21,7 +22,7 @@ const KIND_STYLE: Record<FeedbackKind, { icon: typeof Check; color: string }> = 
   missing: { icon: Minus, color: 'text-ember' },
 }
 
-export function HarnessResultPanel({ scenario, slots, result, outcome, onContinue, onRetry }: Props) {
+export function HarnessResultPanel({ scenario, slots, result, outcome, continueLabel, onContinue, onRetry }: Props) {
   const [shown, skip] = useCountUp(result.score)
   const ringColor = result.verdict === 'approved' ? 'text-teal' : result.verdict === 'partial' ? 'text-volt' : 'text-ember'
 
@@ -90,7 +91,7 @@ export function HarnessResultPanel({ scenario, slots, result, outcome, onContinu
             }}
             className="inline-flex min-h-16 items-center gap-3 rounded-2xl bg-teal px-8 text-xl font-black text-ink-950 hover:brightness-110 active:scale-95"
           >
-            Continue <ArrowRight className="h-6 w-6" aria-hidden />
+            {continueLabel} <ArrowRight className="h-6 w-6" aria-hidden />
           </button>
         </div>
       </div>

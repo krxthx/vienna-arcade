@@ -2,7 +2,8 @@ import { Download, Medal, Trash2, Wrench } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import { GAMES } from '../content/games'
 import { clearScores, fetchScores } from '../lib/api'
-import type { LeaderboardEntry } from '../lib/leaderboard'
+import { formatDuration } from '../lib/format'
+import { QUIZ_POINTS_LABEL, sortEntries, type LeaderboardEntry } from '../lib/leaderboard'
 import type { GameId } from '../types'
 
 interface Props {
@@ -33,7 +34,7 @@ export function Leaderboard({ highlightId, onBack }: Props) {
   }, [])
   useEffect(load, [load])
 
-  const shown = (entries ?? []).filter((e) => filter === 'all' || e.game === filter)
+  const shown = sortEntries(entries ?? []).filter((e) => filter === 'all' || e.game === filter)
   const top = shown.slice(0, LIMIT)
   const highlightRank = highlightId ? shown.findIndex((e) => e.id === highlightId) : -1
   const gameName = (id: GameId) => GAMES.find((g) => g.id === id)?.title ?? id
@@ -102,7 +103,7 @@ export function Leaderboard({ highlightId, onBack }: Props) {
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-2xl font-black text-white">{e.name}</span>
                 <span className="block text-sm text-slate-400">
-                  {gameName(e.game)} · game {e.gameScore} · quiz {e.quizCorrect}/{e.quizTotal}
+                  {gameName(e.game)} · rounds {e.roundsPassed}/{e.roundsTotal} · quiz {e.quizCorrect}/{e.quizTotal} · {formatDuration(e.seconds)}
                 </span>
               </span>
               <span className="text-3xl font-black tabular-nums text-teal">{e.total}</span>
@@ -110,6 +111,8 @@ export function Leaderboard({ highlightId, onBack }: Props) {
           ))}
         </ol>
       )}
+
+      <p className="text-center text-sm text-slate-400">{QUIZ_POINTS_LABEL}</p>
 
       {highlightRank >= LIMIT && (
         <p className="text-center text-lg text-slate-200">You’re currently #{highlightRank + 1}. Keep playing to climb!</p>

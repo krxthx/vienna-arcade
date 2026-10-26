@@ -10,11 +10,12 @@ import { NameEntry } from './components/name-entry'
 import { ViennaQuiz } from './components/vienna-quiz'
 import { Results } from './components/results'
 import { Shell } from './components/shell'
-import { GAMES } from './content/games'
+import { GAMES, ROUNDS_PER_GAME } from './content/games'
 import { submitScore } from './lib/api'
 import { totalScore } from './lib/leaderboard'
-import { pickMany, pickRandom } from './lib/random'
-import type { BonusQuestion as Bonus, GameId, GameOutcome, Puzzle, QuizResult, Scenario } from './types'
+import { sessionOutcome } from './lib/outcome'
+import { pickMany } from './lib/random'
+import type { BonusQuestion as Bonus, GameId, Puzzle, QuizResult, RoundScore, Scenario, SessionOutcome } from './types'
 
 /** Return to the home screen after this long without any input, so the next visitor starts fresh. */
 const IDLE_RESET_MS = 3 * 60 * 1000
@@ -22,10 +23,10 @@ const IDLE_RESET_MS = 3 * 60 * 1000
 type Screen =
   | { name: 'home' }
   | { name: 'name'; game: GameId }
-  | { name: 'architect'; scenario: Scenario; run: number }
-  | { name: 'connect'; puzzle: Puzzle; run: number }
-  | { name: 'quiz'; outcome: GameOutcome; questions: Bonus[] }
-  | { name: 'results'; outcome: GameOutcome; quiz: QuizResult; total: number; rank: number | null; entryId?: string }
+  | { name: 'architect'; rounds: Scenario[]; index: number; scores: RoundScore[]; run: number }
+  | { name: 'connect'; rounds: Puzzle[]; index: number; scores: RoundScore[]; run: number }
+  | { name: 'quiz'; outcome: SessionOutcome; questions: Bonus[] }
+  | { name: 'results'; outcome: SessionOutcome; quiz: QuizResult; seconds: number; total: number; rank: number | null; entryId?: string }
   | { name: 'leaderboard'; highlightId?: string; from: Screen }
 
 function App() {
@@ -33,18 +34,17 @@ function App() {
   // Held in memory for the current visitor only; cleared when returning home.
   const [playerName, setPlayerName] = useState('')
   const runs = useRef(0)
-  const last = useRef<{ scenario?: string; puzzle?: string }>({})
+  const submitting = useRef(false)
+  // When the current play session began (after the name screen), for the time-taken tiebreaker.
+  const startedAt = useRef(0)
 
   const start = useCallback((game: GameId) => {
     const run = ++runs.current
+    startedAt.current = Date.now()
     if (game === 'architect') {
-      const scenario = pickRandom(SCENARIOS, last.current.scenario)
-      last.current.scenario = scenario.id
-      setScreen({ name: 'architect', scenario, run })
+      setScreen({ name: 'architect', rounds: pickMany(SCENARIOS, ROUNDS_PER_GAME), index: 0, scores: [], run })
     } else {
-      const puzzle = pickRandom(PUZZLES, last.current.puzzle)
-      last.current.puzzle = puzzle.id
-      setScreen({ name: 'connect', puzzle, run })
+      setScreen({ name: 'connect', rounds: pickMany(PUZZLES, ROUNDS_PER_GAME), index: 0, scores: [], run })
     }
   }, [])
 
@@ -53,25 +53,41 @@ function App() {
     setScreen({ name: 'home' })
   }, [])
 
-  const toQuiz = (outcome: GameOutcome) => {
+  const toQuiz = (outcome: SessionOutcome) => {
     setScreen({ name: 'quiz', outcome, questions: pickMany(BONUS_QUESTIONS, QUIZ_LENGTH) })
   }
 
-  const finishSession = async (outcome: GameOutcome, quiz: QuizResult) => {
+  /** Records a finished round, then moves to the next round or on to the quiz. */
+  const finishRound = (round: RoundScore) => {
+    if (screen.name !== 'architect' && screen.name !== 'connect') return
+    const scores = [...screen.scores, round]
+    if (scores.length >= screen.rounds.length) toQuiz(sessionOutcome(screen.name, scores))
+    else setScreen({ ...screen, index: screen.index + 1, scores } as Screen)
+  }
+
+  const finishSession = async (outcome: SessionOutcome, quiz: QuizResult) => {
+    // A double-tap on the last button must not record the same visit twice.
+    if (submitting.current) return
+    submitting.current = true
     const quizCorrect = quiz.skipped ? 0 : quiz.correct
-    const total = totalScore(outcome.score, quizCorrect)
+    const seconds = Math.min(24 * 60 * 60, Math.round((Date.now() - startedAt.current) / 1000))
+    const base = { outcome, quiz, seconds, total: totalScore(outcome.passed, quizCorrect) }
     try {
       const saved = await submitScore({
         name: playerName,
         game: outcome.game,
-        gameScore: outcome.score,
+        roundsPassed: outcome.passed,
+        roundsTotal: outcome.rounds.length,
         quizCorrect,
         quizTotal: quiz.total,
+        seconds,
       })
-      setScreen({ name: 'results', outcome, quiz, total: saved.entry.total, rank: saved.rank, entryId: saved.entry.id })
+      setScreen({ name: 'results', ...base, total: saved.entry.total, rank: saved.rank, entryId: saved.entry.id })
     } catch {
       // Never block the visitor on a server hiccup; the results still show.
-      setScreen({ name: 'results', outcome, quiz, total, rank: null })
+      setScreen({ name: 'results', ...base, rank: null })
+    } finally {
+      submitting.current = false
     }
   }
 
@@ -98,7 +114,12 @@ function App() {
       onHome={isHome ? undefined : goHome}
       onRestart={restartable ? () => start(screen.name as GameId) : undefined}
     >
-      {screen.name === 'home' && <Home onPlay={(game) => setScreen({ name: 'name', game })} onLeaderboard={() => setScreen({ name: 'leaderboard', from: screen })} />}
+      {screen.name === 'home' && (
+        <Home
+          onPlay={(game) => setScreen({ name: 'name', game })}
+          onLeaderboard={() => setScreen({ name: 'leaderboard', from: screen })}
+        />
+      )}
       {screen.name === 'name' && (
         <NameEntry
           gameTitle={GAMES.find((g) => g.id === screen.game)!.title}
@@ -110,19 +131,37 @@ function App() {
           }}
         />
       )}
-      {screen.name === 'architect' && <ArchitectGame key={screen.run} scenario={screen.scenario} onComplete={toQuiz} />}
-      {screen.name === 'connect' && <ConnectionGame key={screen.run} puzzle={screen.puzzle} onComplete={toQuiz} />}
-      {screen.name === 'quiz' && (
-        <ViennaQuiz
-          questions={screen.questions}
-          onDone={(quiz) => finishSession(screen.outcome, quiz)}
+      {screen.name === 'architect' && (
+        <ArchitectGame
+          key={`${screen.run}-${screen.index}`}
+          scenario={screen.rounds[screen.index]}
+          round={{ number: screen.index + 1, total: screen.rounds.length }}
+          onComplete={finishRound}
         />
       )}
+      {screen.name === 'connect' && (
+        <ConnectionGame
+          key={`${screen.run}-${screen.index}`}
+          puzzle={screen.rounds[screen.index]}
+          round={{ number: screen.index + 1, total: screen.rounds.length }}
+          onComplete={finishRound}
+        />
+      )}
+      {screen.name === 'quiz' && (
+        <ViennaQuiz questions={screen.questions} onDone={(quiz) => finishSession(screen.outcome, quiz)} />
+      )}
       {screen.name === 'results' && (
-        <Results outcome={screen.outcome} quiz={screen.quiz} playerName={playerName}
+        <Results
+          outcome={screen.outcome}
+          quiz={screen.quiz}
+          playerName={playerName}
           rank={screen.rank}
           total={screen.total}
-          onLeaderboard={() => setScreen({ name: 'leaderboard', highlightId: screen.entryId, from: screen })} onPlayAgain={() => start(screen.outcome.game)} onHome={goHome} />
+          seconds={screen.seconds}
+          onLeaderboard={() => setScreen({ name: 'leaderboard', highlightId: screen.entryId, from: screen })}
+          onPlayAgain={() => start(screen.outcome.game)}
+          onHome={goHome}
+        />
       )}
       {screen.name === 'leaderboard' && (
         <Leaderboard highlightId={screen.highlightId} onBack={() => setScreen(screen.from)} />

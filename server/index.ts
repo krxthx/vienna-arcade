@@ -47,9 +47,13 @@ function readBody(req: IncomingMessage): Promise<unknown> {
   })
 }
 
-/** Clearing is an organizer action: needs ADMIN_KEY if set, otherwise only the server machine itself. */
+/**
+ * Clearing is an organizer action: needs ADMIN_KEY if set, otherwise only a direct request from the
+ * server machine itself. Requests relayed by a reverse proxy (forwarding headers) never count as local.
+ */
 function isAdmin(req: IncomingMessage): boolean {
   if (ADMIN_KEY) return req.headers['x-admin-key'] === ADMIN_KEY
+  if (req.headers['x-forwarded-for'] || req.headers['forwarded'] || req.headers['x-real-ip']) return false
   const addr = req.socket.remoteAddress ?? ''
   return addr === '127.0.0.1' || addr === '::1' || addr === '::ffff:127.0.0.1'
 }

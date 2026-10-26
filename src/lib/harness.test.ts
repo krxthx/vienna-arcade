@@ -4,7 +4,9 @@ import { PUZZLES } from '../content/puzzles'
 import { BONUS_QUESTIONS } from '../content/bonus'
 import { HARNESS_COMPONENTS } from '../content/components'
 import { emptySlots, evaluateHarness, needsStatus, placeComponent, removeFromSlot, scenarioChoices } from './harness'
-import { connectionScore } from './outcome'
+import { connectionScore, isPassed, sessionOutcome } from './outcome'
+import { QUIZ_LENGTH } from '../content/bonus'
+import { ROUNDS_PER_GAME } from '../content/games'
 
 const news = SCENARIOS.find((s) => s.id === 'news-briefer')!
 const refund = SCENARIOS.find((s) => s.id === 'refund-desk')!
@@ -92,11 +94,37 @@ describe('connection scoring', () => {
   })
 })
 
+describe('session outcome', () => {
+  const rounds = (...scores: number[]) => scores.map((score, i) => ({ label: `r${i}`, score }))
+
+  it('passes a round at 85 or more', () => {
+    expect(isPassed(85)).toBe(true)
+    expect(isPassed(84)).toBe(false)
+    expect(isPassed(connectionScore(0, 1))).toBe(true)
+    expect(isPassed(connectionScore(1, 0))).toBe(false)
+  })
+
+  it('counts passed rounds and titles by the pass rate', () => {
+    const good = sessionOutcome('architect', rounds(100, 90, 85, 100, 100))
+    expect(good.passed).toBe(5)
+    expect(good.title).toBe('Harness Approved!')
+    expect(good.message).toContain('perfect run')
+    expect(sessionOutcome('architect', rounds(100, 100, 0, 0)).title).toBe('Evaluation Complete!')
+    expect(sessionOutcome('architect', rounds(100, 0, 0, 0)).title).toBe('One More Iteration?')
+    const connect = sessionOutcome('connect', rounds(100, 100, 100, 100, 50))
+    expect(connect.title).toBe('Connection Found!')
+    expect(connect.passed).toBe(4)
+    expect(connect.rounds).toHaveLength(5)
+    expect(sessionOutcome('connect', rounds(100, 100, 100, 50)).title).toBe('Evaluation Complete!')
+  })
+})
+
 describe('content integrity', () => {
-  it('meets the minimum bank sizes', () => {
-    expect(SCENARIOS.length).toBeGreaterThanOrEqual(8)
-    expect(PUZZLES.length).toBeGreaterThanOrEqual(15)
-    expect(BONUS_QUESTIONS.length).toBeGreaterThanOrEqual(10)
+  it('has enough content for a full session', () => {
+    expect(SCENARIOS.length).toBeGreaterThanOrEqual(ROUNDS_PER_GAME)
+    expect(PUZZLES.length).toBeGreaterThanOrEqual(ROUNDS_PER_GAME)
+    expect(BONUS_QUESTIONS.length).toBeGreaterThanOrEqual(20)
+    expect(BONUS_QUESTIONS.length).toBeGreaterThanOrEqual(QUIZ_LENGTH)
   })
 
   it.each(SCENARIOS)('scenario $id is consistent and perfectly solvable', (s) => {

@@ -119,6 +119,22 @@ export interface GameOutcome {
   learned: string
 }
 
+/** One finished round: what it was and how it scored (0-100). */
+export interface RoundScore {
+  label: string
+  score: number
+}
+
+/** The whole play session: every round, and how many were passed. */
+export interface SessionOutcome {
+  game: GameId
+  title: string
+  message: string
+  learned: string
+  rounds: RoundScore[]
+  passed: number
+}
+
 export interface QuizResult {
   correct: number
   total: number
