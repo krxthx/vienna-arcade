@@ -15,7 +15,7 @@ export function Home({ onPlay, onLeaderboard }: { onPlay: (game: GameId) => void
     <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center gap-8 py-4">
       <motion.div initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} className="text-center">
         <h1 className="text-5xl font-black tracking-tight text-white sm:text-6xl lg:text-7xl">
-          THE APPLIED <span className="text-teal">AI</span> ARCADE
+          THE <span className="text-teal">VIENNA</span> ARCADE
         </h1>
         <p className="mt-3 font-mono text-lg tracking-[0.35em] text-slate-300 sm:text-xl">
           THINK. <span className="text-violet">BUILD.</span> <span className="text-ember">CONNECT.</span>

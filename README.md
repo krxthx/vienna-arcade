@@ -1,4 +1,4 @@
-# The Applied AI Arcade
+# The Vienna Arcade
 
 A booth-friendly arcade with two mini-games about Applied AI. Each play is 10 random rounds, with a name and email prompt first, a 4-question Vienna quiz after it, and a results screen. Scores go to a SQLite database through a tiny Node server, so several devices can share one leaderboard. There are no accounts, and no external services or network calls.
 

@@ -1,4 +1,4 @@
-import { Gamepad2, Home, RotateCcw } from 'lucide-react'
+import { Home, RotateCcw } from 'lucide-react'
 import { MotionConfig } from 'motion/react'
 import { ElapsedTimer } from './elapsed-timer'
 import type { ReactNode } from 'react'
@@ -20,8 +20,8 @@ export function Shell({ children, timerStart, onHome, onRestart }: ShellProps) {
         <div className="blueprint relative flex min-h-full flex-col bg-ink-950">
           <header className="flex items-center justify-between gap-3 px-5 py-4 sm:px-8">
             <div className="flex items-center gap-3">
-              <Gamepad2 className="h-7 w-7 text-teal" aria-hidden />
-              <span className="font-mono text-sm font-bold tracking-[0.25em] text-slate-300">AI ARCADE</span>
+              {/* Light variant of the logo: the original artwork is dark and vanishes on the navy page. */}
+              <img src="/brand/vienna-logo-light.svg" alt="Project Vienna" className="h-14 w-auto" draggable={false} />
             </div>
             <nav className="flex items-center gap-2" aria-label="Game controls">
               {timerStart !== undefined && <ElapsedTimer startedAt={timerStart} />}
