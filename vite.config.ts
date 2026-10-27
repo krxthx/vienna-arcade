@@ -5,6 +5,9 @@ import { defineConfig } from 'vitest/config'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  server: { proxy: { '/api': 'http://localhost:3001' } },
+  server: {
+    proxy: { '/api': 'http://localhost:3001' },
+    allowedHosts: ['.ngrok-free.dev'],
+  },
   test: { include: ['src/**/*.test.ts', 'server/**/*.test.ts'] },
 })
