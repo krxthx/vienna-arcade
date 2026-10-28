@@ -30,9 +30,9 @@ export const GAMES: GameInfo[] = [
     number: 2,
     title: 'Find the Connection',
     tagline: 'Discover the hidden connections in Applied AI.',
-    duration: '~4 min',
+    duration: '~20 min',
     accent: 'teal',
-    rounds: 10,
+    rounds: 45,
     learned: 'Applied AI is full of ideas hiding in plain sight, from context windows to model routing. Now you can spot them.',
   },
 ]

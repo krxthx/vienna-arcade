@@ -58,7 +58,7 @@ All content is typed data, with no UI changes needed:
 
 ## Picture puzzles
 
-Find the Connection is picture-only and **free-text**: players see 1–4 pictures, read them left to right, and type the AI term (CORN + TEXT + WINDOW ≈ Context Window). The 32-puzzle bank is the source of truth in `src/content/puzzles.ts`; SQLite stores leaderboard scores only, so puzzle changes need a rebuild rather than a database migration. Images found through web search are downloaded unchanged under `public/puzzles/web/` and work offline. The custom artwork from the earlier iteration has been removed. Put additional image files in `public/puzzles/` and add a puzzle:
+Find the Connection is picture-only and **free-text**: players see 1–4 pictures, read them left to right, and type the AI term (CORN + TEXT + WINDOW ≈ Context Window). The 45-puzzle bank is the source of truth in `src/content/puzzles.ts`; SQLite stores leaderboard scores only, so puzzle changes need a rebuild rather than a database migration. Images found through web search are downloaded unchanged under `public/puzzles/web/` and work offline. The custom artwork from the earlier iteration has been removed. Put additional image files in `public/puzzles/` and add a puzzle:
 
 ```ts
 {
@@ -82,7 +82,7 @@ Answers are matched forgivingly (`src/lib/answer-match.ts`): case, spaces, hyphe
 
 ## Scoring
 
-Architect the Agent is 3 random challenges and Find the Connection is 10 random puzzles (`rounds` in `src/content/games.ts`; round points are scaled to 10 so both rank fairly), then a 4-question Vienna quiz (`QUIZ_LENGTH`).
+Architect the Agent is 3 random challenges and Find the Connection is all 45 puzzles in random order (`rounds` in `src/content/games.ts`; round points are scaled to 10 so both rank fairly), then a 4-question Vienna quiz (`QUIZ_LENGTH`).
 
 A round is **passed** at a score of 85+: a harness mission earns "Harness Approved", and a connection puzzle needs no wrong guesses and at most one hint. Per round, the harness score is the share of the mission's needs covered, minus 15 per unneeded part; optional extras are never penalised and order doesn't matter. A connection puzzle starts at 100, minus 25 per wrong guess and 10 per hint (0 if the answer is revealed).
 

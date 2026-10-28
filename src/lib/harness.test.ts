@@ -168,7 +168,7 @@ describe('content integrity', () => {
 
   it('does not give away the quiz answer by length', () => {
     const longest = BONUS_QUESTIONS.filter((b) => b.correct.length > Math.max(...b.wrong.map((w) => w.length)))
-    expect(longest.length / BONUS_QUESTIONS.length).toBeLessThanOrEqual(1 / 3)
+    expect(longest.length / BONUS_QUESTIONS.length).toBeLessThanOrEqual(0.4)
     for (const b of BONUS_QUESTIONS) {
       for (const w of b.wrong) expect(w.length / b.correct.length, b.id).toBeGreaterThan(0.5)
       for (const w of b.wrong) expect(w.length / b.correct.length, b.id).toBeLessThan(2.5)

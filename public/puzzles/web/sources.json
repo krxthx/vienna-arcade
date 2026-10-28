@@ -36,30 +36,6 @@
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
   },
   {
-    "file": "/puzzles/web/prompt.png",
-    "title": "Command Prompt on Windows 8.png",
-    "source": "https://commons.wikimedia.org/wiki/File:Command_Prompt_on_Windows_8.png",
-    "download": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Command_Prompt_on_Windows_8.png",
-    "author": "Microsoft CorporationThe original uploader was Ariesk47 at  Wikipedia.",
-    "license": "Public domain",
-    "licenseUrl": "",
-    "description": "Screenshot of Command Prompt on Windows 8",
-    "date": "2012-10-30",
-    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
-  },
-  {
-    "file": "/puzzles/web/moldy-bread.jpg",
-    "title": "A Moldy Loaf of Bread.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:A_Moldy_Loaf_of_Bread.jpg",
-    "download": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_Moldy_Loaf_of_Bread.jpg/960px-A_Moldy_Loaf_of_Bread.jpg",
-    "author": "Muldoonsamuel55",
-    "license": "CC0",
-    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-    "description": "A Moldy Loaf of Bread",
-    "date": "2024-11-08",
-    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
-  },
-  {
     "file": "/puzzles/web/tree.jpg",
     "title": "Oak tree Sunol Regional Wilderness California 2023 dllu.jpg",
     "source": "https://commons.wikimedia.org/wiki/File:Oak_tree_Sunol_Regional_Wilderness_California_2023_dllu.jpg",
@@ -72,42 +48,6 @@
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
   },
   {
-    "file": "/puzzles/web/seed.jpg",
-    "title": "Sunflower seeds 1.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:Sunflower_seeds_1.jpg",
-    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/Sunflower_seeds_1.jpg/960px-Sunflower_seeds_1.jpg",
-    "author": "GerFes",
-    "license": "Public domain",
-    "licenseUrl": "",
-    "description": "Sunflower seeds",
-    "date": "2011-03-30 11:21:47",
-    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
-  },
-  {
-    "file": "/puzzles/web/dance.jpg",
-    "title": "2005 ballroom dance championships.JPG",
-    "source": "https://commons.wikimedia.org/wiki/File:2005_ballroom_dance_championships.JPG",
-    "download": "https://upload.wikimedia.org/wikipedia/commons/b/b6/2005_ballroom_dance_championships.JPG",
-    "author": "Porfitron at en.wikipedia",
-    "license": "CC BY 2.5",
-    "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
-    "description": "2005 professional ballroom dance championships.\nPhoto taken at Brigahm Young University, Provo, UT.\nFor use in ballroom dance, competitive dance, and dancesport topics.\nPhoto taken by Porfirio Landeros. \n\nPhoto (c) Porfirio Landeros, Kwixite Media[1].",
-    "date": "12 March 2005 (according to Exif data)\n\n9 July 2007 (original upload date)",
-    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
-  },
-  {
-    "file": "/puzzles/web/money.png",
-    "title": "Fijian Two Dollar Banknotes.png",
-    "source": "https://commons.wikimedia.org/wiki/File:Fijian_Two_Dollar_Banknotes.png",
-    "download": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Fijian_Two_Dollar_Banknotes.png",
-    "author": "Damien Linnane",
-    "license": "CC BY-SA 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-    "description": "Two Fijian two dollar bank notes. Top note is the design from 1980, bottom note is the design from 1988.",
-    "date": "2012-12-21 13:12:14",
-    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
-  },
-  {
     "file": "/puzzles/web/knowledge.jpg",
     "title": "Books in a stack (a stack of books) - Flickr - austinevan.jpg",
     "source": "https://commons.wikimedia.org/wiki/File:Books_in_a_stack_(a_stack_of_books)_-_Flickr_-_austinevan.jpg",
@@ -115,8 +55,8 @@
     "author": "Evan Bench from paris, france",
     "license": "CC BY 2.0",
     "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-    "description": "s&amp;co books... some old, some new, all fun to look through.  A favorite bookstore in the latin quarter of many english-speakers (and readers).  There´s something lonely about a stack of old dusty books... but still hopeful. Attribute to \"Evan Lawrence Bench\"",
-    "date": "Taken on 24 August 2007, 19:42",
+    "description": "s&amp;co books... some old, some new, all fun to look through.  A favorite bookstore in the latin quarter of many english-speakers (and readers).  There\u00b4s something lonely about a stack of old dusty books... but still hopeful. Attribute to \"Evan Lawrence Bench\"",
+    "date": "Taken on\u00a024 August 2007, 19:42",
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
   },
   {
@@ -129,30 +69,6 @@
     "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
     "description": "Poker Chips",
     "date": "2011-05-24 00:00",
-    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
-  },
-  {
-    "file": "/puzzles/web/brain.png",
-    "title": "Brain Lateral (NIH BioArt 60).png",
-    "source": "https://commons.wikimedia.org/wiki/File:Brain_Lateral_(NIH_BioArt_60).png",
-    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2b/Brain_Lateral_%28NIH_BioArt_60%29.png/960px-Brain_Lateral_%28NIH_BioArt_60%29.png",
-    "author": "Courtesy of NIAID\n\nRyan Kissinger",
-    "license": "Public domain",
-    "licenseUrl": "",
-    "description": "Lateral view of a human brain.",
-    "date": "2024-06-27",
-    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
-  },
-  {
-    "file": "/puzzles/web/rock.jpg",
-    "title": "Granite.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:Granite.jpg",
-    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Granite.jpg/960px-Granite.jpg",
-    "author": "Eurico Zimbres, FGEL/UERJ",
-    "license": "CC BY-SA 2.0 br",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/br/deed.en",
-    "description": "",
-    "date": "",
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
   },
   {
@@ -204,28 +120,6 @@
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
   },
   {
-    "file": "/puzzles/web/laboratory.jpg",
-    "title": "Chemistry laboratory.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:Chemistry_laboratory.jpg",
-    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bf/Chemistry_laboratory.jpg/960px-Chemistry_laboratory.jpg",
-    "author": "Cjp24",
-    "license": "CC BY-SA 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-    "description": "A chemistry laboratory equipped with three glass benches.",
-    "date": "2009-06-02",
-    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
-  },
-  {
-    "file": "/puzzles/web/eleven.jpg",
-    "title": "Eleven from Stranger Things",
-    "source": "https://serial.everyeye.it/notizie/stranger-things-undici-doveva-morire-stagione-serie-netflix-310708.html",
-    "download": "https://images.everyeye.it/img-notizie/stranger-things-undici-doveva-morire-stagione-serie-netflix-v4-310708.jpg",
-    "author": "Netflix (Stranger Things still), via Everyeye",
-    "license": "Copyright Netflix; no open license stated",
-    "licenseUrl": "",
-    "modifications": "None; downloaded unchanged from the source."
-  },
-  {
     "file": "/puzzles/web/fine.jpg",
     "title": "Many parking fine tickets on van windscreen.jpg",
     "source": "https://commons.wikimedia.org/wiki/File:Many_parking_fine_tickets_on_van_windscreen.jpg",
@@ -251,7 +145,7 @@
   },
   {
     "file": "/puzzles/web/thermometer.jpg",
-    "title": "Common mercury thermometer - termômetro.jpg",
+    "title": "Common mercury thermometer - term\u00f4metro.jpg",
     "source": "https://commons.wikimedia.org/wiki/File:Common_mercury_thermometer_-_term%C3%B4metro.jpg",
     "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Common_mercury_thermometer_-_term%C3%B4metro.jpg/960px-Common_mercury_thermometer_-_term%C3%B4metro.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
     "author": "TCdeOLiveira",
@@ -311,7 +205,7 @@
   },
   {
     "file": "/puzzles/web/thinker.jpg",
-    "title": "Le Penseur Musée Rodin Paris S.1295.jpg",
+    "title": "Le Penseur Mus\u00e9e Rodin Paris S.1295.jpg",
     "source": "https://commons.wikimedia.org/wiki/File:Le_Penseur_Mus%C3%A9e_Rodin_Paris_S.1295.jpg",
     "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Le_Penseur_Mus%C3%A9e_Rodin_Paris_S.1295.jpg/960px-Le_Penseur_Mus%C3%A9e_Rodin_Paris_S.1295.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
     "author": "Auguste Rodin",
@@ -322,51 +216,14 @@
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
   },
   {
-    "file": "/puzzles/web/magnifier.jpg",
-    "title": "Magnifying glass2.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:Magnifying_glass2.jpg",
-    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/Magnifying_glass2.jpg/960px-Magnifying_glass2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "author": "Heptagon",
-    "license": "Public domain",
-    "licenseUrl": "",
-    "description": "Philately, Magnifying glass shows the magnified image of the Deutsche Post 1 Reichsmark postage stamp issued on May 12 1946.",
-    "date": "2008-03-24",
-    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
-  },
-  {
-    "file": "/puzzles/web/robot.jpg",
-    "title": "Humanoid robot at Science Square Tsukuba.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:Humanoid_robot_at_Science_Square_Tsukuba.jpg",
-    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/Humanoid_robot_at_Science_Square_Tsukuba.jpg/960px-Humanoid_robot_at_Science_Square_Tsukuba.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "author": "Syced",
-    "license": "CC0",
-    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-    "description": "Humanoid robot at Science Square Tsukuba",
-    "date": "10 February 2024 (according to Exif data)",
-    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
-  },
-  {
-    "file": "/puzzles/web/report-card.jpg",
-    "title": "School report card.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:School_report_card.jpg",
-    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/School_report_card.jpg/960px-School_report_card.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "author": "Musinguzibenard",
-    "license": "CC BY 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
-    "description": "School report card in uganda",
-    "date": "2026-01-05",
-    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
-  },
-  {
-    "file": "/puzzles/web/police.jpg",
-    "title": "U.S. Army Military Police officer standing in front of his Patrol Car in Germany.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:U.S._Army_Military_Police_officer_standing_in_front_of_his_Patrol_Car_in_Germany.jpg",
-    "download": "https://upload.wikimedia.org/wikipedia/commons/b/bb/U.S._Army_Military_Police_officer_standing_in_front_of_his_Patrol_Car_in_Germany.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-    "author": "Rick Scavetta, IMCOM",
-    "license": "Public domain",
-    "licenseUrl": "",
-    "description": "Sgt. Harry Nixon, 38, a military police officer with U.S. Army Garrison Rheinland-Pfalz's 95th Military Police Company, is credited with saving the life of a Ge",
-    "date": "2014-11-04 16:38:25",
+    "file": "/puzzles/web/neural-network.png",
+    "title": "Colored neural network.svg",
+    "source": "https://commons.wikimedia.org/wiki/File:Colored_neural_network.svg",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/Colored_neural_network.svg/960px-Colored_neural_network.svg.png",
+    "author": "Glosser.ca",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "description": "Diagram of a neural network with input, hidden and output layers.",
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
   }
 ]
