@@ -6,7 +6,6 @@ export interface GameInfo {
   number: number;
   title: string;
   tagline: string;
-  duration: string;
   accent: Accent;
   /** Random questions (puzzles or challenges) per play session. */
   rounds: number;
@@ -20,7 +19,6 @@ export const GAMES: GameInfo[] = [
     number: 1,
     title: "Architect the Agent",
     tagline: "Build the right AI harness for the job.",
-    duration: "~5 min",
     accent: "violet",
     rounds: ARCHITECT_ROUNDS,
     learned:
@@ -31,7 +29,6 @@ export const GAMES: GameInfo[] = [
     number: 2,
     title: "Find the Connection",
     tagline: "Discover the hidden connections in Applied AI.",
-    duration: "~20 min",
     accent: "teal",
     rounds: CONNECT_ROUNDS,
     learned:

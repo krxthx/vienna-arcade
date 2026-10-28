@@ -1,4 +1,4 @@
-import { Clock, Play } from 'lucide-react'
+import { Play } from 'lucide-react'
 import { motion } from 'motion/react'
 import type { ReactNode } from 'react'
 import type { GameInfo } from '../content/games'
@@ -26,13 +26,10 @@ export function GameCard({ game, illustration, onPlay, index }: GameCardProps) {
         <p className={`font-mono text-sm font-bold tracking-[0.2em] ${a.text}`}>GAME {game.number}</p>
         <h2 className="text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl">{game.title}</h2>
         <p className="text-lg text-slate-300">{game.tagline}</p>
-        <div className="mt-auto flex items-center gap-2 pt-2 text-slate-300">
-          <Clock className="h-5 w-5" aria-hidden /> {game.duration}
-        </div>
         <button
           type="button"
           onClick={onPlay}
-          className={`mt-2 inline-flex min-h-16 items-center justify-center gap-3 rounded-2xl text-xl font-black tracking-wide transition active:scale-95 ${a.solid} hover:brightness-110`}
+          className={`mt-auto inline-flex min-h-16 items-center justify-center gap-3 rounded-2xl text-xl font-black tracking-wide transition active:scale-95 ${a.solid} hover:brightness-110`}
         >
           <Play className="h-6 w-6 fill-current" aria-hidden /> PLAY
         </button>
