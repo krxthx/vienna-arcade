@@ -58,7 +58,7 @@ All content is typed data, with no UI changes needed:
 
 ## Picture puzzles
 
-Find the Connection is picture-only and **free-text**: players see 1–4 pictures, read them left to right, and type the AI term (CORN + TEXT + WINDOW ≈ Context Window). The 34-puzzle bank is the source of truth in `src/content/puzzles.ts`; SQLite stores leaderboard scores only, so puzzle changes need a rebuild rather than a database migration. Images found through web search are downloaded unchanged under `public/puzzles/web/` and work offline. The custom artwork from the earlier iteration has been removed. Put additional image files in `public/puzzles/` and add a puzzle:
+Find the Connection is picture-only and **free-text**: players see 1–4 pictures, read them left to right, and type the AI term (CORN + TEXT + WINDOW ≈ Context Window). The 32-puzzle bank is the source of truth in `src/content/puzzles.ts`; SQLite stores leaderboard scores only, so puzzle changes need a rebuild rather than a database migration. Images found through web search are downloaded unchanged under `public/puzzles/web/` and work offline. The custom artwork from the earlier iteration has been removed. Put additional image files in `public/puzzles/` and add a puzzle:
 
 ```ts
 {

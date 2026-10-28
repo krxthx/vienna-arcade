@@ -132,18 +132,6 @@
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
   },
   {
-    "file": "/puzzles/web/fallback.png",
-    "title": "VRRP Failover Diagram.png",
-    "source": "https://commons.wikimedia.org/wiki/File:VRRP_Failover_Diagram.png",
-    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/VRRP_Failover_Diagram.png/960px-VRRP_Failover_Diagram.png",
-    "author": "Jan Bellon",
-    "license": "CC0",
-    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-    "description": "VRRP failover diagram on a dual-gateway network",
-    "date": "2026-07-02",
-    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
-  },
-  {
     "file": "/puzzles/web/token.jpg",
     "title": "Poker Chips (12370353025).jpg",
     "source": "https://commons.wikimedia.org/wiki/File:Poker_Chips_(12370353025).jpg",
@@ -228,18 +216,6 @@
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
   },
   {
-    "file": "/puzzles/web/letter-s.png",
-    "title": "LetterS.svg",
-    "source": "https://commons.wikimedia.org/wiki/File:LetterS.svg",
-    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/84/LetterS.svg/960px-LetterS.svg.png",
-    "author": "Bequw",
-    "license": "CC BY-SA 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
-    "description": "a capital, sans-serif letter 'S'",
-    "date": "2009-10-26",
-    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
-  },
-  {
     "file": "/puzzles/web/laboratory.jpg",
     "title": "Chemistry laboratory.jpg",
     "source": "https://commons.wikimedia.org/wiki/File:Chemistry_laboratory.jpg",
@@ -262,15 +238,87 @@
     "modifications": "None; downloaded unchanged from the source."
   },
   {
-    "file": "/puzzles/web/warm.png",
-    "title": "Black Coffee and Tea in White Cup is Hot.png",
-    "source": "https://commons.wikimedia.org/wiki/File:Black_Coffee_and_Tea_in_White_Cup_is_Hot.png",
-    "download": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Black_Coffee_and_Tea_in_White_Cup_is_Hot.png/960px-Black_Coffee_and_Tea_in_White_Cup_is_Hot.png",
-    "author": "epSos.de",
+    "file": "/puzzles/web/fine.jpg",
+    "title": "Many parking fine tickets on van windscreen.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Many_parking_fine_tickets_on_van_windscreen.jpg",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/Many_parking_fine_tickets_on_van_windscreen.jpg/960px-Many_parking_fine_tickets_on_van_windscreen.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "author": "Tim Sheerman-Chase",
     "license": "CC BY 2.0",
     "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-    "description": "Hot black coffee in a white cup on a wooden table.",
-    "date": "2012-10-22",
+    "description": "Many parking fine tickets on van windscreen",
+    "date": "2025-05-13 13:34:49",
+    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
+  },
+  {
+    "file": "/puzzles/web/tuning-fork.jpg",
+    "title": "Tuning Fork 288 HZ.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Tuning_Fork_288_HZ.jpg",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Tuning_Fork_288_HZ.jpg/960px-Tuning_Fork_288_HZ.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "author": "K.Venkataramana",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "description": "Tuning Fork 288 HZ",
+    "date": "2025-04-01 16:10:41",
+    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
+  },
+  {
+    "file": "/puzzles/web/thermometer.jpg",
+    "title": "Common mercury thermometer - termômetro.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Common_mercury_thermometer_-_term%C3%B4metro.jpg",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Common_mercury_thermometer_-_term%C3%B4metro.jpg/960px-Common_mercury_thermometer_-_term%C3%B4metro.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "author": "TCdeOLiveira",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "common mercury thermometer for body temperature mesuring",
+    "date": "2021-10-16",
+    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
+  },
+  {
+    "file": "/puzzles/web/sandbox.jpg",
+    "title": "Sandbox-2013.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Sandbox-2013.jpg",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/Sandbox-2013.jpg/960px-Sandbox-2013.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "author": "Al Silonov",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "A sandbox in Moscow",
+    "date": "2013-06-03",
+    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
+  },
+  {
+    "file": "/puzzles/web/transformer.jpg",
+    "title": "Single Phase Pole Mount Transformer.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Single_Phase_Pole_Mount_Transformer.jpg",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3b/Single_Phase_Pole_Mount_Transformer.jpg/960px-Single_Phase_Pole_Mount_Transformer.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "author": "Kkiefuik",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "A single phase pole-mounted transformer in a residential neighborhood in Lethbridge, Alberta, Canada. The upper wire is the high voltage primary, and the lower ",
+    "date": "2013-04-26 11:04:10",
+    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
+  },
+  {
+    "file": "/puzzles/web/fire.jpg",
+    "title": "Fire and flames.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Fire_and_flames.jpg",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/Fire_and_flames.jpg/960px-Fire_and_flames.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "author": "Amelia P Schaffner",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "fire and flames in a bonfire",
+    "date": "2019-09-01",
+    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
+  },
+  {
+    "file": "/puzzles/web/brick-wall.jpg",
+    "title": "Red brick wall texture.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Red_brick_wall_texture.JPG",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e6/Red_brick_wall_texture.JPG/960px-Red_brick_wall_texture.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "author": "M0tty",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "description": "Red bricks texture.",
+    "date": "2013-01-28 15:03:34",
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
   }
 ]

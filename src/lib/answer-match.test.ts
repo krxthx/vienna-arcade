@@ -28,9 +28,9 @@ describe('answer matching', () => {
   })
 
   it('accepts the words in any order', () => {
-    const p = find('rebus-model-fallback')
-    for (const t of ['Model Fallback', 'Fallback Model', 'fallback-model']) expect(isAnswerCorrect(t, p), t).toBe(true)
-    expect(isAnswerCorrect('Fallback', p)).toBe(false)
+    const p = find('rebus-fine-tuning')
+    for (const t of ['Fine Tuning', 'Tuning Fine', 'tuning-fine']) expect(isAnswerCorrect(t, p), t).toBe(true)
+    expect(isAnswerCorrect('Tuning', p)).toBe(false)
   })
 
   it('forgives small spelling mistakes', () => {
@@ -45,9 +45,6 @@ describe('answer matching', () => {
   it('accepts listed aliases', () => {
     expect(isAnswerCorrect('HITL', find('rebus-hitl'))).toBe(true)
     expect(isAnswerCorrect('MoE', find('rebus-mixture-of-experts'))).toBe(true)
-    expect(isAnswerCorrect('vector db', find('rebus-vector-database'))).toBe(true)
-    expect(isAnswerCorrect('infinite loop', find('rebus-infinite-agent-loop'))).toBe(true)
-    expect(isAnswerCorrect('infinite agent loop', find('rebus-infinite-agent-loop'))).toBe(true)
     expect(isAnswerCorrect('benchmarks', find('rebus-benchmark'))).toBe(true)
   })
 
