@@ -98,7 +98,7 @@ export const PUZZLES: Puzzle[] = [
     topic: 'AI model names',
     tiles: [
       pic('deep-sea.jpeg', 'The deep sea'),
-      pic('searching.jpeg', 'A magnifying glass searching for something'),
+      pic('web/magnifier.jpg', 'A magnifying glass examining a stamp'),
     ],
     answer: 'DeepSeek',
     hints: ['A well-known open model lab.', 'Say them out loud: “deep” + “seek”.'],
@@ -110,7 +110,7 @@ export const PUZZLES: Puzzle[] = [
     topic: 'Evaluation',
     tiles: [
       pic('park-bench.jpeg', 'A park bench'),
-      pic('marks-100.jpeg', 'A student showing marks'),
+      pic('web/report-card.jpg', 'A school report card with marks'),
     ],
     answer: 'Benchmark',
     hints: ['A standard test for comparing models.', 'Say them out loud: “bench” + “marks”.'],
@@ -161,7 +161,7 @@ export const PUZZLES: Puzzle[] = [
     topic: 'Reasoning',
     tiles: [
       pic('web/chain.jpg', 'A chain'),
-      pic('web/thought.png', 'A thought bubble'),
+      pic('web/thinker.jpg', 'Rodin’s The Thinker statue'),
     ],
     answer: 'Chain of Thought',
     hints: ['A sequence of intermediate reasoning steps.', 'A chain + a thought bubble.'],
@@ -308,7 +308,7 @@ export const PUZZLES: Puzzle[] = [
     id: 'rebus-ai-gateway',
     topic: 'Model routing',
     tiles: [
-      pic('ai-brain.jpeg', 'An AI robot'),
+      pic('web/robot.jpg', 'A humanoid robot'),
       pic('gateway.jpeg', 'The Gateway of India'),
     ],
     answer: 'AI Gateway',

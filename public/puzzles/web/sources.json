@@ -36,18 +36,6 @@
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
   },
   {
-    "file": "/puzzles/web/thought.png",
-    "title": "Thinking thought bubble.png",
-    "source": "https://commons.wikimedia.org/wiki/File:Thinking_thought_bubble.png",
-    "download": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Thinking_thought_bubble.png",
-    "author": "FreyaSyauqila",
-    "license": "CC BY 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
-    "description": "a simple illustration of a man thinking with an empty thought bubble",
-    "date": "2023-06-15",
-    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
-  },
-  {
     "file": "/puzzles/web/prompt.png",
     "title": "Command Prompt on Windows 8.png",
     "source": "https://commons.wikimedia.org/wiki/File:Command_Prompt_on_Windows_8.png",
@@ -319,6 +307,54 @@
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
     "description": "Red bricks texture.",
     "date": "2013-01-28 15:03:34",
+    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
+  },
+  {
+    "file": "/puzzles/web/thinker.jpg",
+    "title": "Le Penseur Musée Rodin Paris S.1295.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Le_Penseur_Mus%C3%A9e_Rodin_Paris_S.1295.jpg",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Le_Penseur_Mus%C3%A9e_Rodin_Paris_S.1295.jpg/960px-Le_Penseur_Mus%C3%A9e_Rodin_Paris_S.1295.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "author": "Auguste Rodin",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "description": "",
+    "date": "1903. 1904 for cast. 2017-06-04 for photograph",
+    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
+  },
+  {
+    "file": "/puzzles/web/magnifier.jpg",
+    "title": "Magnifying glass2.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Magnifying_glass2.jpg",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/Magnifying_glass2.jpg/960px-Magnifying_glass2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "author": "Heptagon",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "description": "Philately, Magnifying glass shows the magnified image of the Deutsche Post 1 Reichsmark postage stamp issued on May 12 1946.",
+    "date": "2008-03-24",
+    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
+  },
+  {
+    "file": "/puzzles/web/robot.jpg",
+    "title": "Humanoid robot at Science Square Tsukuba.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Humanoid_robot_at_Science_Square_Tsukuba.jpg",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/Humanoid_robot_at_Science_Square_Tsukuba.jpg/960px-Humanoid_robot_at_Science_Square_Tsukuba.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "author": "Syced",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "description": "Humanoid robot at Science Square Tsukuba",
+    "date": "10 February 2024 (according to Exif data)",
+    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
+  },
+  {
+    "file": "/puzzles/web/report-card.jpg",
+    "title": "School report card.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:School_report_card.jpg",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/School_report_card.jpg/960px-School_report_card.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "author": "Musinguzibenard",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "description": "School report card in uganda",
+    "date": "2026-01-05",
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
   }
 ]
