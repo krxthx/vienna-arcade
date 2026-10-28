@@ -134,7 +134,7 @@ export const PUZZLES: Puzzle[] = [
     id: 'rebus-mixture-of-experts',
     topic: 'Model routing',
     tiles: [
-      pic('web/mixture.jpg', 'A mixing bowl with a spatula'),
+      pic('web/trail-mix.jpg', 'A pile of trail mix'),
       pic('expert-conference.jpeg', 'A conference of scientists'),
     ],
     answer: 'Mixture of Experts',
@@ -161,7 +161,7 @@ export const PUZZLES: Puzzle[] = [
     topic: 'Reasoning',
     tiles: [
       pic('web/chain.jpg', 'A chain'),
-      pic('web/thinker.jpg', 'Rodin’s The Thinker statue'),
+      pic('web/thought-bubble.png', 'A thought bubble'),
     ],
     answer: 'Chain of Thought',
     hints: ['A sequence of intermediate reasoning steps.', 'A chain + a thought bubble.'],
@@ -488,14 +488,13 @@ export const PUZZLES: Puzzle[] = [
     id: 'rebus-quantization',
     topic: 'GPU inference',
     tiles: [
-      pic('quantum.jpeg', 'Quantum'),
-      pic('tie.jpeg', 'A tie'),
-      pic('train-station.jpeg', 'A train station'),
+      pic('web/mandrill.png', 'A full-colour photo of a mandrill'),
+      pic('web/mandrill-6-colors.png', 'The same photo squeezed into 6 colours'),
     ],
     answer: 'Quantization',
     accept: ['Quantisation'],
-    hints: ['Shrinking a model by using fewer bits per weight.', 'Say them out loud: “quant” + “tie” + “station”.'],
-    explanation: 'Quant + tie + station sounds like Quantization: storing weights with fewer bits to make models smaller and faster.',
+    hints: ['Shrinking a model by using fewer bits per weight.', 'Same picture, fewer colours: fewer distinct values to store.'],
+    explanation: 'Full colour squeezed into fewer colours is quantization. Models do it to their weights, using fewer bits to get smaller and faster.',
     difficulty: 3,
   },
   {

@@ -55,8 +55,8 @@
     "author": "Evan Bench from paris, france",
     "license": "CC BY 2.0",
     "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-    "description": "s&amp;co books... some old, some new, all fun to look through.  A favorite bookstore in the latin quarter of many english-speakers (and readers).  There\u00b4s something lonely about a stack of old dusty books... but still hopeful. Attribute to \"Evan Lawrence Bench\"",
-    "date": "Taken on\u00a024 August 2007, 19:42",
+    "description": "s&amp;co books... some old, some new, all fun to look through.  A favorite bookstore in the latin quarter of many english-speakers (and readers).  There´s something lonely about a stack of old dusty books... but still hopeful. Attribute to \"Evan Lawrence Bench\"",
+    "date": "Taken on 24 August 2007, 19:42",
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
   },
   {
@@ -69,18 +69,6 @@
     "licenseUrl": "",
     "description": "",
     "date": "",
-    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
-  },
-  {
-    "file": "/puzzles/web/mixture.jpg",
-    "title": "SpatulaAndbowl.JPG",
-    "source": "https://commons.wikimedia.org/wiki/File:SpatulaAndbowl.JPG",
-    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e4/SpatulaAndbowl.JPG/960px-SpatulaAndbowl.JPG",
-    "author": "Zul32",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "description": "A rubber spatula and mixing bowl used in making a batch of truffles",
-    "date": "2014-12-19 20:06:18",
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
   },
   {
@@ -121,7 +109,7 @@
   },
   {
     "file": "/puzzles/web/thermometer.jpg",
-    "title": "Common mercury thermometer - term\u00f4metro.jpg",
+    "title": "Common mercury thermometer - termômetro.jpg",
     "source": "https://commons.wikimedia.org/wiki/File:Common_mercury_thermometer_-_term%C3%B4metro.jpg",
     "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Common_mercury_thermometer_-_term%C3%B4metro.jpg/960px-Common_mercury_thermometer_-_term%C3%B4metro.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
     "author": "TCdeOLiveira",
@@ -180,18 +168,6 @@
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
   },
   {
-    "file": "/puzzles/web/thinker.jpg",
-    "title": "Le Penseur Mus\u00e9e Rodin Paris S.1295.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:Le_Penseur_Mus%C3%A9e_Rodin_Paris_S.1295.jpg",
-    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Le_Penseur_Mus%C3%A9e_Rodin_Paris_S.1295.jpg/960px-Le_Penseur_Mus%C3%A9e_Rodin_Paris_S.1295.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "author": "Auguste Rodin",
-    "license": "CC0",
-    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-    "description": "",
-    "date": "1903. 1904 for cast. 2017-06-04 for photograph",
-    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
-  },
-  {
     "file": "/puzzles/web/neural-network.png",
     "title": "Colored neural network.svg",
     "source": "https://commons.wikimedia.org/wiki/File:Colored_neural_network.svg",
@@ -223,5 +199,53 @@
     "description": "Coins saved in a jar and in stacks, with plants growing from them.",
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution.",
     "download": "https://commons.wikimedia.org/wiki/File:Money_saving_growth.jpg"
+  },
+  {
+    "file": "/puzzles/web/mandrill.png",
+    "title": "Wikipedia-sipi-image-db-mandrill-4.2.03.png",
+    "source": "https://commons.wikimedia.org/wiki/File:Wikipedia-sipi-image-db-mandrill-4.2.03.png",
+    "download": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Wikipedia-sipi-image-db-mandrill-4.2.03.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "author": "Not specified in SIPI Image Database",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "description": "Original uncompressed image of a Mandrill from the USC SIPI Image Database.",
+    "date": "Unknown date",
+    "modifications": "Resized to 512x512 from the Wikimedia Commons preview."
+  },
+  {
+    "file": "/puzzles/web/thought-bubble.png",
+    "title": "Thought Bubble (NIH BioArt 518).png",
+    "source": "https://commons.wikimedia.org/wiki/File:Thought_Bubble_(NIH_BioArt_518).png",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5d/Thought_Bubble_%28NIH_BioArt_518%29.png/960px-Thought_Bubble_%28NIH_BioArt_518%29.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "author": "Courtesy of NIAID\n\nRyan Kissinger",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "description": "Thought bubble",
+    "date": "2024-08-28",
+    "modifications": "Placed on a white background with padding."
+  },
+  {
+    "file": "/puzzles/web/trail-mix.jpg",
+    "title": "Planters-Trail-Mix.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Planters-Trail-Mix.jpg",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Planters-Trail-Mix.jpg/960px-Planters-Trail-Mix.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "author": "Evan-Amos",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "description": "A pile of Planter's brand trail mix, with peanuts, cashews, M&amp;Ms and almonds.",
+    "date": "2011-04-07",
+    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
+  },
+  {
+    "file": "/puzzles/web/mandrill-6-colors.png",
+    "title": "Wikipedia-sipi-image-db-mandrill-4.2.03.png",
+    "source": "https://commons.wikimedia.org/wiki/File:Wikipedia-sipi-image-db-mandrill-4.2.03.png",
+    "download": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Wikipedia-sipi-image-db-mandrill-4.2.03.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "author": "Not specified in SIPI Image Database",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "description": "Original uncompressed image of a Mandrill from the USC SIPI Image Database.",
+    "date": "Unknown date",
+    "modifications": "Derived from mandrill.png: resized to 512x512 and reduced to a 6-colour palette (colour quantization) with Pillow."
   }
 ]

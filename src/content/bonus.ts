@@ -129,9 +129,9 @@ export const BONUS_QUESTIONS: BonusQuestion[] = [
   },
   {
     id: 'new-version',
-    prompt: 'A new version of your model is released. Do you need to re-evaluate?',
-    correct: 'Yes, on the same tests',
-    wrong: ['No, newer is better', 'Only if it costs less'],
+    prompt: 'The model provider releases a new version of the model you use. What’s the safest next step?',
+    correct: 'Re-run your same tests on it',
+    wrong: ['Switch, since newer is better', 'Switch only if it’s cheaper'],
     explanation: 'New versions can improve some things and break others. Re-running the same tests shows what changed for your workload.',
   },
   {
@@ -150,17 +150,17 @@ export const BONUS_QUESTIONS: BonusQuestion[] = [
   },
   {
     id: 'prompt-growth',
-    prompt: 'An agent’s prompt grows from 2,000 to 20,000 tokens. What usually happens?',
-    correct: 'Both rise',
-    wrong: ['Only cost rises', 'Neither changes'],
+    prompt: 'An agent’s prompt grows from 2,000 to 20,000 tokens. What happens to cost and response time?',
+    correct: 'Both go up',
+    wrong: ['Only cost goes up', 'Both stay the same'],
     explanation: 'Longer inputs mean more tokens to process, which costs more and takes longer.',
   },
   {
     id: 'on-prem',
-    prompt: 'Which workload is the best fit for your own hardware?',
-    correct: 'Steady and sensitive',
-    wrong: ['Rare, bursty, public data', 'One-off experiments'],
-    explanation: 'Owning hardware pays off when use is constant and data is sensitive. Spiky or experimental work suits the cloud.',
+    prompt: 'A bank runs AI on private customer data, all day, every day. Where does it make most sense to host the model?',
+    correct: 'On hardware it controls',
+    wrong: ['On a shared public demo', 'Only on a laptop'],
+    explanation: 'Steady use and sensitive data favour hardware you control. Spiky or experimental work is usually cheaper in the cloud.',
   },
   {
     id: 'leaderboard-leak',
@@ -171,9 +171,9 @@ export const BONUS_QUESTIONS: BonusQuestion[] = [
   },
   {
     id: 'raw-vs-harness',
-    prompt: 'A leaderboard tests the bare model with no tools or memory. Your product uses both. The gap could be…',
-    correct: 'Often large',
-    wrong: ['Always small', 'Always zero'],
-    explanation: 'Tools, memory and prompts can lift or hurt a model a lot, so raw scores don’t predict how your agent will perform.',
+    prompt: 'A public leaderboard ranks Model X first. Your agent adds its own tools and memory around the model. What should you do before choosing X?',
+    correct: 'Test it inside your own agent',
+    wrong: ['Trust the leaderboard rank', 'Pick the most expensive model'],
+    explanation: 'Tools, memory and prompts can lift or hurt a model a lot, so a leaderboard rank doesn’t predict how it will perform inside your agent. Test it in your own setup.',
   },
 ]
