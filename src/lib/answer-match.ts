@@ -36,6 +36,40 @@ export function allowedTypos(length: number): number {
   return 3
 }
 
+const isVowel = (c: string) => 'aeiou'.includes(c)
+
+/**
+ * Other ways of writing a term that people would reasonably type: plurals and endings
+ * ("context rot" -> "context rotting"), and the stem of an -ing word ("routing" -> "route").
+ */
+export function wordForms(target: string): string[] {
+  const forms = new Set<string>([target])
+  const last = target[target.length - 1]
+  const prev = target[target.length - 2]
+  forms.add(`${target}s`)
+  forms.add(`${target}es`)
+  forms.add(`${target}ing`)
+  forms.add(`${target}ed`)
+  // doubled final consonant after a short vowel: rot -> rotting, rotted
+  if (target.length >= 3 && !isVowel(last) && isVowel(prev) && !'wxy'.includes(last)) {
+    forms.add(`${target}${last}ing`)
+    forms.add(`${target}${last}ed`)
+  }
+  if (last === 'e') {
+    forms.add(`${target.slice(0, -1)}ing`)
+    forms.add(`${target}d`)
+  }
+  if (target.endsWith('ing') && target.length > 5) {
+    const stem = target.slice(0, -3)
+    forms.add(stem)
+    forms.add(`${stem}e`)
+    forms.add(`${stem}s`)
+    if (stem[stem.length - 1] === stem[stem.length - 2]) forms.add(stem.slice(0, -1))
+  }
+  if (target.endsWith('s') && target.length > 4) forms.add(target.slice(0, -1))
+  return [...forms]
+}
+
 /** Is `input` an acceptable answer to this puzzle, allowing for small spelling mistakes? */
 export function isAnswerCorrect(input: string, puzzle: Pick<Puzzle, 'answer' | 'accept' | 'reject'>): boolean {
   const typed = normalizeAnswer(input)
@@ -43,7 +77,8 @@ export function isAnswerCorrect(input: string, puzzle: Pick<Puzzle, 'answer' | '
   if ((puzzle.reject ?? []).some((r) => normalizeAnswer(r) === typed)) return false
   return [puzzle.answer, ...(puzzle.accept ?? [])].some((candidate) => {
     const target = normalizeAnswer(candidate)
-    return editDistance(typed, target) <= allowedTypos(target.length)
+    const typos = allowedTypos(target.length)
+    return wordForms(target).some((form) => editDistance(typed, form) <= typos)
   })
 }
 

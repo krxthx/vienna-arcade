@@ -16,12 +16,18 @@ export function architectOutcome(scenario: Scenario, result: HarnessResult): Gam
   }
 }
 
-export const HINT_PENALTY = 10
+/** Each hint takes this share off whatever the round would otherwise have scored. */
+export const HINT_PENALTY_PCT = 10
 export const WRONG_PENALTY = 25
 
-/** Score for one connection round: 100, minus a penalty per wrong guess and per hint. */
+/** A score after using `hints` hints: proportional, so a low score loses less than a high one. */
+export function applyHints(score: number, hints: number): number {
+  return Math.round(Math.max(0, score) * Math.max(0, 1 - (hints * HINT_PENALTY_PCT) / 100))
+}
+
+/** Score for one connection round: 100 minus a penalty per wrong guess, then reduced per hint. */
 export function connectionScore(wrongGuesses: number, hintsUsed: number): number {
-  return Math.max(0, 100 - wrongGuesses * WRONG_PENALTY - hintsUsed * HINT_PENALTY)
+  return applyHints(Math.max(0, 100 - wrongGuesses * WRONG_PENALTY), hintsUsed)
 }
 
 /** A round counts as passed at this score or higher (harness approved; a puzzle with no wrong guesses). */

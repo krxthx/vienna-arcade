@@ -12,7 +12,6 @@ interface Props {
   outcome: GameOutcome
   continueLabel: string
   onContinue: () => void
-  onRetry: () => void
 }
 
 const KIND_STYLE: Record<FeedbackKind, { icon: typeof Check; color: string }> = {
@@ -22,7 +21,7 @@ const KIND_STYLE: Record<FeedbackKind, { icon: typeof Check; color: string }> = 
   missing: { icon: Minus, color: 'text-ember' },
 }
 
-export function HarnessResultPanel({ scenario, slots, result, outcome, continueLabel, onContinue, onRetry }: Props) {
+export function HarnessResultPanel({ scenario, slots, result, outcome, continueLabel, onContinue }: Props) {
   const [shown, skip] = useCountUp(result.score)
   const ringColor = result.verdict === 'approved' ? 'text-teal' : result.verdict === 'partial' ? 'text-volt' : 'text-ember'
 
@@ -71,18 +70,6 @@ export function HarnessResultPanel({ scenario, slots, result, outcome, continueL
       <div className="flex flex-wrap items-center justify-between gap-4">
         <p className="max-w-3xl text-lg text-slate-300">{outcome.message}</p>
         <div className="flex gap-3">
-          {result.verdict !== 'approved' && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation()
-                onRetry()
-              }}
-              className="min-h-16 rounded-2xl border-2 border-ink-600 bg-ink-800 px-6 text-lg font-bold hover:border-volt active:scale-95"
-            >
-              Tweak it
-            </button>
-          )}
           <button
             type="button"
             onClick={(e) => {

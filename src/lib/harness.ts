@@ -1,4 +1,5 @@
 import type { ComponentId, FeedbackItem, HarnessResult, Scenario, Verdict } from '../types'
+import { applyHints, HINT_PENALTY_PCT } from './outcome'
 import { HARNESS_COMPONENTS } from '../content/components'
 
 export type Slots = (ComponentId | null)[]
@@ -86,4 +87,17 @@ export function evaluateHarness(scenario: Scenario, slots: Slots): HarnessResult
   const verdict: Verdict = score >= SCORING.approved ? 'approved' : score >= SCORING.partial ? 'partial' : 'retry'
 
   return { score, verdict, feedback, placed: status }
+}
+
+const verdictFor = (score: number): Verdict => (score >= SCORING.approved ? 'approved' : score >= SCORING.partial ? 'partial' : 'retry')
+
+/** Using the hint takes a share off the score, as in Find the Connection. */
+export function withHintPenalty(result: HarnessResult): HarnessResult {
+  const score = applyHints(result.score, 1)
+  return {
+    ...result,
+    score,
+    verdict: verdictFor(score),
+    feedback: [...result.feedback, { kind: 'missing', text: `Hint used: −${HINT_PENALTY_PCT}% of the score.` }],
+  }
 }

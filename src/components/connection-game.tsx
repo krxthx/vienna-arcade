@@ -2,7 +2,7 @@ import { ArrowRight, Check, Eye, Lightbulb, Send } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { Fragment, useState, type FormEvent } from 'react'
 import { answerPattern, isAnswerCorrect } from '../lib/answer-match'
-import { connectionScore } from '../lib/outcome'
+import { connectionScore, HINT_PENALTY_PCT } from '../lib/outcome'
 import type { Puzzle, RoundScore } from '../types'
 import { RoundProgress } from './round-progress'
 
@@ -13,6 +13,11 @@ interface Props {
 }
 
 const TILE_COLORS = ['border-teal', 'border-volt', 'border-ember', 'border-violet']
+
+/** tiles grow with the screen but stay short enough to leave room for the answer box */
+function tileSize(count: number) {
+  return count >= 4 ? 'min(21vw, 30vh)' : count === 3 ? 'min(27vw, 34vh)' : 'min(36vw, 38vh)'
+}
 
 export function ConnectionGame({ puzzle, round, onComplete }: Props) {
   const [text, setText] = useState('')
@@ -36,36 +41,37 @@ export function ConnectionGame({ puzzle, round, onComplete }: Props) {
   const finish = () => onComplete({ label: puzzle.answer, score })
 
   return (
-    <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center gap-6">
+    <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center gap-5">
       <div className="flex flex-col items-center text-center">
         <RoundProgress number={round.number} total={round.total} className="mb-2" />
         <p className="font-mono text-sm font-bold tracking-[0.2em] text-teal">PICTURE PUZZLE</p>
-        <h1 className="mt-1 text-4xl font-black text-white sm:text-5xl">What AI term do these spell?</h1>
+        <h1 className="mt-1 text-4xl font-black text-white sm:text-5xl">What AI term is hidden here?</h1>
+        <p className="mt-2 text-sm text-slate-400">Read left to right. Apply any letter edits shown below a picture.</p>
       </div>
 
-      <div className="flex flex-wrap items-center justify-center gap-4">
+      <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5">
         {puzzle.tiles.map((tile, i) => (
           <Fragment key={tile.image + i}>
             {i > 0 && (
-              <span className="text-4xl font-black text-slate-400" aria-hidden>
-                +
+              <span className="text-4xl font-black text-slate-400" role="img" aria-label={tile.operator === 'minus' ? 'minus' : 'plus'}>
+                {tile.operator === 'minus' ? '−' : '+'}
               </span>
             )}
             <motion.div
               initial={{ opacity: 0, y: 30, rotate: i % 2 ? 3 : -3 }}
               animate={{ opacity: 1, y: 0, rotate: 0, scale: state === 'solved' ? 1.03 : 1 }}
               transition={{ delay: i * 0.1, type: 'spring', stiffness: 260, damping: 20 }}
-              className={`flex h-44 items-center justify-center rounded-2xl border-2 bg-ink-900 p-2 sm:h-52 ${
-                puzzle.tiles.length >= 4 ? 'w-40 sm:w-44' : 'w-48 sm:h-60 sm:w-60'
-              } ${state === 'solved' ? `${TILE_COLORS[i % 4]} shadow-[0_0_30px_-8px_currentColor]` : 'border-ink-600'}`}
+              style={{ width: tileSize(puzzle.tiles.length), height: tileSize(puzzle.tiles.length) }}
+              className={`flex flex-col items-center justify-center rounded-2xl border-2 bg-ink-900 p-1.5 ${state === 'solved' ? `${TILE_COLORS[i % 4]} shadow-[0_0_30px_-8px_currentColor]` : 'border-ink-600'}`}
             >
-              <img src={tile.image} alt={tile.label} draggable={false} className="h-full w-full rounded-xl object-contain" />
+              <img src={tile.image} alt={tile.label} draggable={false} className="min-h-0 w-full flex-1 rounded-xl bg-slate-100 object-contain" />
+              {tile.edit && <span className="mt-1 rounded-lg bg-teal/15 px-4 py-1 font-mono text-xl font-bold text-teal" aria-label={`Letter edit: ${tile.edit.replace('−', 'remove').replace('+', 'add')}`}>{tile.edit}</span>}
             </motion.div>
           </Fragment>
         ))}
       </div>
 
-      <div className="min-h-16 text-center text-lg text-slate-200" aria-live="polite">
+      <div className="min-h-10 text-center text-lg text-slate-200" aria-live="polite">
         <AnimatePresence>
           {hints >= 1 && !done && (
             <motion.div key={hints} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="inline-flex max-w-2xl flex-col gap-1 rounded-xl bg-ember/10 px-4 py-2">
@@ -139,7 +145,7 @@ export function ConnectionGame({ puzzle, round, onComplete }: Props) {
             </button>
           </form>
           <p className="-mt-3 min-h-6 text-center text-lg text-ember" aria-live="polite">
-            {wrong > 0 ? 'Not quite. Say the pictures out loud and try again.' : ''}
+            {wrong > 0 ? 'Not quite. Check the pictures and any letter edits, then try again.' : ''}
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <button
@@ -148,7 +154,7 @@ export function ConnectionGame({ puzzle, round, onComplete }: Props) {
               onClick={() => setHints((h) => Math.min(2, h + 1))}
               className="inline-flex min-h-14 items-center gap-2 rounded-xl border-2 border-ember/60 px-5 font-bold text-ember hover:bg-ember/10 disabled:opacity-40"
             >
-              <Lightbulb className="h-5 w-5" aria-hidden /> {hints === 0 ? 'Need a hint?' : hints === 1 ? 'Another hint' : 'No more hints'}
+              <Lightbulb className="h-5 w-5" aria-hidden /> {hints === 0 ? 'Need a hint?' : hints === 1 ? 'Another hint' : 'No more hints'}{hints < 2 && <span className="font-mono text-sm opacity-80">−{HINT_PENALTY_PCT}%</span>}
             </button>
             <button
               type="button"
@@ -160,6 +166,7 @@ export function ConnectionGame({ puzzle, round, onComplete }: Props) {
           </div>
         </>
       )}
+      <a href="/puzzles/credits.html" target="_blank" rel="noreferrer" className="self-center text-xs text-slate-400 underline decoration-slate-600 underline-offset-4 hover:text-slate-200">Image sources</a>
     </div>
   )
 }

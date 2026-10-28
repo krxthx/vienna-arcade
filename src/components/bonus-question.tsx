@@ -10,10 +10,9 @@ interface Props {
   number: number
   total: number
   onDone: (correct: boolean) => void
-  onSkip: () => void
 }
 
-export function BonusQuestion({ question, number, total, onDone, onSkip }: Props) {
+export function BonusQuestion({ question, number, total, onDone }: Props) {
   const options = useMemo(() => shuffle([question.correct, ...question.wrong]), [question])
   const [picked, setPicked] = useState<string | null>(null)
   const answered = picked !== null
@@ -80,13 +79,7 @@ export function BonusQuestion({ question, number, total, onDone, onSkip }: Props
             {number === total ? 'See results' : 'Next'} <ArrowRight className="h-6 w-6" aria-hidden />
           </button>
         </motion.div>
-      ) : (
-        <div className="flex justify-center">
-          <button type="button" onClick={onSkip} className="min-h-12 px-4 font-semibold text-slate-400 underline underline-offset-4 hover:text-white">
-            Skip quiz
-          </button>
-        </div>
-      )}
+      ) : null}
     </div>
   )
 }

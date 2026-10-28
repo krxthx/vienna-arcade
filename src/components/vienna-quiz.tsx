@@ -19,10 +19,9 @@ export function ViennaQuiz({ questions, onDone }: Props) {
       question={questions[index]}
       number={index + 1}
       total={total}
-      onSkip={() => onDone({ correct, total, skipped: true })}
       onDone={(right) => {
         const nextCorrect = correct + (right ? 1 : 0)
-        if (index + 1 >= total) onDone({ correct: nextCorrect, total, skipped: false })
+        if (index + 1 >= total) onDone({ correct: nextCorrect, total })
         else {
           setCorrect(nextCorrect)
           setIndex(index + 1)

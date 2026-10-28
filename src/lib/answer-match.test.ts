@@ -29,10 +29,10 @@ describe('answer matching', () => {
 
   it('forgives small spelling mistakes', () => {
     expect(isAnswerCorrect('contxt windw', find('rebus-context-window'))).toBe(true)
-    expect(isAnswerCorrect('hallucinashun', find('rebus-hallucination'))).toBe(false) // too far
-    expect(isAnswerCorrect('halucination', find('rebus-hallucination'))).toBe(true)
-    expect(isAnswerCorrect('quantisation', find('rebus-quantization'))).toBe(true)
-    expect(isAnswerCorrect('optimization', find('rebus-optimisation'))).toBe(true)
+    expect(isAnswerCorrect('hallucinashun', { answer: 'Hallucination' })).toBe(false) // too far
+    expect(isAnswerCorrect('halucination', { answer: 'Hallucination' })).toBe(true)
+    expect(isAnswerCorrect('quantisation', { answer: 'Quantization' })).toBe(true)
+    expect(isAnswerCorrect('optimization', { answer: 'Optimisation' })).toBe(true)
     expect(isAnswerCorrect('olama', find('rebus-ollama'))).toBe(true)
   })
 
@@ -40,16 +40,30 @@ describe('answer matching', () => {
     expect(isAnswerCorrect('HITL', find('rebus-hitl'))).toBe(true)
     expect(isAnswerCorrect('MoE', find('rebus-mixture-of-experts'))).toBe(true)
     expect(isAnswerCorrect('vector db', find('rebus-vector-database'))).toBe(true)
+    expect(isAnswerCorrect('infinite loop', find('rebus-infinite-agent-loop'))).toBe(true)
+    expect(isAnswerCorrect('infinite agent loop', find('rebus-infinite-agent-loop'))).toBe(true)
+    expect(isAnswerCorrect('benchmarks', find('rebus-benchmark'))).toBe(true)
+  })
+
+  it('accepts other forms of the same term', () => {
+    const rot = find('rebus-context-rot')
+    for (const t of ['context rot', 'context rotting', 'Context Rots', 'context rotted', 'contxt roting']) {
+      expect(isAnswerCorrect(t, rot), t).toBe(true)
+    }
+    expect(isAnswerCorrect('model route', find('rebus-model-routing'))).toBe(true)
+    expect(isAnswerCorrect('prompt cache', find('rebus-prompt-caching'))).toBe(true)
+    expect(isAnswerCorrect('open claude', find('rebus-openclaw'))).toBe(false)
+    expect(isAnswerCorrect('hallucinations', { answer: 'Hallucination' })).toBe(true)
+    expect(isAnswerCorrect('context windows', find('rebus-context-window'))).toBe(true)
   })
 
   it('rejects wrong, empty and near-miss answers', () => {
-    expect(isAnswerCorrect('', find('rebus-qwen'))).toBe(false)
-    expect(isAnswerCorrect('   ', find('rebus-qwen'))).toBe(false)
-    expect(isAnswerCorrect('banana', find('rebus-qwen'))).toBe(false)
-    expect(isAnswerCorrect('gwen', find('rebus-qwen'))).toBe(false) // the picture, not the answer
-    expect(isAnswerCorrect('qwen', find('rebus-qwen'))).toBe(true)
-    expect(isAnswerCorrect('benchmarking', find('rebus-benchmaxing'))).toBe(false)
-    expect(isAnswerCorrect('benchmaxing', find('rebus-benchmaxing'))).toBe(true)
+    expect(isAnswerCorrect('', find('rebus-tool-calling'))).toBe(false)
+    expect(isAnswerCorrect('   ', find('rebus-tool-calling'))).toBe(false)
+    expect(isAnswerCorrect('banana', find('rebus-tool-calling'))).toBe(false)
+    expect(isAnswerCorrect('model routing', find('rebus-tool-calling'))).toBe(false)
+    expect(isAnswerCorrect('tool calling', find('rebus-tool-calling'))).toBe(true)
+    expect(isAnswerCorrect('benchmark', find('rebus-benchmark'))).toBe(true)
   })
 
   it('every puzzle accepts its own answer, and no puzzle accepts another puzzle’s answer', () => {

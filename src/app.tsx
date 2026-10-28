@@ -10,7 +10,7 @@ import { NameEntry } from './components/name-entry'
 import { ViennaQuiz } from './components/vienna-quiz'
 import { Results } from './components/results'
 import { Shell } from './components/shell'
-import { GAMES, ROUNDS_PER_GAME } from './content/games'
+import { GAMES, roundsFor } from './content/games'
 import { submitScore } from './lib/api'
 import { totalScore } from './lib/leaderboard'
 import { sessionOutcome } from './lib/outcome'
@@ -43,9 +43,9 @@ function App() {
     const run = ++runs.current
     setStartedAt(Date.now())
     if (game === 'architect') {
-      setScreen({ name: 'architect', rounds: pickMany(SCENARIOS, ROUNDS_PER_GAME), index: 0, scores: [], run })
+      setScreen({ name: 'architect', rounds: pickMany(SCENARIOS, roundsFor('architect')), index: 0, scores: [], run })
     } else {
-      setScreen({ name: 'connect', rounds: pickMany(PUZZLES, ROUNDS_PER_GAME), index: 0, scores: [], run })
+      setScreen({ name: 'connect', rounds: pickMany(PUZZLES, roundsFor('connect')), index: 0, scores: [], run })
     }
   }, [])
 
@@ -71,9 +71,8 @@ function App() {
     // A double-tap on the last button must not record the same visit twice.
     if (submitting.current) return
     submitting.current = true
-    const quizCorrect = quiz.skipped ? 0 : quiz.correct
     const seconds = Math.min(24 * 60 * 60, Math.round((Date.now() - startedAt) / 1000))
-    const base = { outcome, quiz, seconds, total: totalScore(outcome.passed, quizCorrect) }
+    const base = { outcome, quiz, seconds, total: totalScore(outcome.passed, outcome.rounds.length, quiz.correct) }
     try {
       const saved = await submitScore({
         name: playerName,
@@ -81,7 +80,7 @@ function App() {
         game: outcome.game,
         roundsPassed: outcome.passed,
         roundsTotal: outcome.rounds.length,
-        quizCorrect,
+        quizCorrect: quiz.correct,
         quizTotal: quiz.total,
         seconds,
       })
@@ -112,13 +111,11 @@ function App() {
 
   // The timer runs from the first round until the quiz is finished.
   const timing = screen.name === 'architect' || screen.name === 'connect' || screen.name === 'quiz'
-  const restartable = screen.name === 'architect' || screen.name === 'connect'
 
   return (
     <Shell
       timerStart={timing ? startedAt : undefined}
       onHome={isHome ? undefined : goHome}
-      onRestart={restartable ? () => start(screen.name as GameId) : undefined}
     >
       {screen.name === 'home' && (
         <Home
@@ -167,7 +164,6 @@ function App() {
           total={screen.total}
           seconds={screen.seconds}
           onLeaderboard={() => setScreen({ name: 'leaderboard', highlightId: screen.entryId, from: screen })}
-          onPlayAgain={() => start(screen.outcome.game)}
           onHome={goHome}
         />
       )}

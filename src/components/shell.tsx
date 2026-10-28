@@ -1,4 +1,4 @@
-import { Home, RotateCcw } from 'lucide-react'
+import { Home } from 'lucide-react'
 import { MotionConfig } from 'motion/react'
 import { ElapsedTimer } from './elapsed-timer'
 import type { ReactNode } from 'react'
@@ -8,13 +8,12 @@ interface ShellProps {
   /** When set, a running timer is shown in the header. */
   timerStart?: number
   onHome?: () => void
-  onRestart?: () => void
 }
 
 const navButton =
   'inline-flex min-h-12 items-center gap-2 rounded-xl border border-ink-600 bg-ink-800 px-4 font-semibold text-slate-100 transition hover:border-volt hover:bg-ink-700 active:scale-95'
 
-export function Shell({ children, timerStart, onHome, onRestart }: ShellProps) {
+export function Shell({ children, timerStart, onHome }: ShellProps) {
   return (
     <MotionConfig reducedMotion="user">
         <div className="blueprint relative flex min-h-full flex-col bg-ink-950">
@@ -25,11 +24,6 @@ export function Shell({ children, timerStart, onHome, onRestart }: ShellProps) {
             </div>
             <nav className="flex items-center gap-2" aria-label="Game controls">
               {timerStart !== undefined && <ElapsedTimer startedAt={timerStart} />}
-              {onRestart && (
-                <button type="button" className={navButton} onClick={onRestart}>
-                  <RotateCcw className="h-5 w-5" aria-hidden /> Restart
-                </button>
-              )}
               {onHome && (
                 <button type="button" className={navButton} onClick={onHome}>
                   <Home className="h-5 w-5" aria-hidden /> Home

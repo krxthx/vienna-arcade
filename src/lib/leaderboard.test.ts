@@ -9,8 +9,9 @@ const ok = { name: ' Ada ', email: ' Ada@Example.com ', game: 'connect', roundsP
 
 describe('leaderboard helpers', () => {
   it('totals rounds passed plus quiz answers right', () => {
-    expect(totalScore(8, 3)).toBe(11)
-    expect(totalScore(0, 0)).toBe(0)
+    expect(totalScore(8, 10, 3)).toBe(11)
+    expect(totalScore(0, 10, 0)).toBe(0)
+    expect(totalScore(2, 3, 3)).toBe(10) // 2 of 3 rounds is about 7 of 10
   })
 
   it('ranks by points, then the faster time, then earlier finish', () => {

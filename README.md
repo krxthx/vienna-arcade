@@ -3,7 +3,7 @@
 A booth-friendly arcade with two mini-games about Applied AI. Each play is 10 random rounds, with a name and email prompt first, a 4-question Vienna quiz after it, and a results screen. Scores go to a SQLite database through a tiny Node server, so several devices can share one leaderboard. There are no accounts, and no external services or network calls.
 
 - **Architect the Agent** – read a plain-language mission, plug parts into a harness around the model (drag, or tap then tap), then run a deterministic evaluation.
-- **Find the Connection** – spot what links four clues; optional progressive hints.
+- **Find the Connection** – decode picture rebuses into AI terms; optional progressive hints and visible letter edits.
 
 Stack: Vite, React 19, TypeScript, Tailwind CSS v4, Motion, Lucide, Vitest, Oxlint, Node + SQLite.
 (The repo was scaffolded with Vite, so it was kept rather than switching to Next.js.)
@@ -58,27 +58,31 @@ All content is typed data, with no UI changes needed:
 
 ## Picture puzzles
 
-Find the Connection is picture-only and **free-text**: players see 1–4 pictures, say them aloud in order, and type the AI term (corn + texts + window = "con" + "text" + "window" = Context Window). Put image files in `public/puzzles/` and add a puzzle to `src/content/puzzles.ts`:
+Find the Connection is picture-only and **free-text**: players see 1–4 pictures, read them left to right, apply visible letter edits, and type the AI term (CORN − R + TEXT + WINDOW = Context Window). The 38-puzzle bank is the source of truth in `src/content/puzzles.ts`; SQLite stores leaderboard scores only, so puzzle changes need a rebuild rather than a database migration. Images found through web search are downloaded unchanged under `public/puzzles/web/` and work offline. The custom artwork from the earlier iteration has been removed. Put additional image files in `public/puzzles/` and add a puzzle:
 
 ```ts
 {
   id: 'rebus-context-window',
   topic: 'Context engineering',
-  tiles: [pic('corn.jpeg', 'Corn'), pic('chat-bubbles.jpeg', 'Text messages'), pic('window.jpeg', 'A window')],
+  tiles: [
+    pic('corn-cob.jpeg', 'Corn', { edit: '− R' }),
+    pic('chat-bubbles.jpeg', 'Text messages'),
+    pic('window.jpeg', 'A window'),
+  ],
   answer: 'Context Window',
   accept: ['CW'],              // optional extra wordings (abbreviations, variants)
   reject: ['Context Rot'],     // optional near-misses that must NOT count
-  hints: ['How much text a model can read at once.', 'Say them out loud: “con” + “text” + “window”.'],
+  hints: ['The information available to a model.', 'Corn minus R, then text and window.'],
   explanation: '...',
   difficulty: 1,
 }
 ```
 
-Answers are matched forgivingly (`src/lib/answer-match.ts`): case, spaces, hyphens and punctuation are ignored, and small typos are allowed in proportion to the answer's length (none for 3 letters or fewer, 1 up to 8, 2 up to 14, 3 beyond). Use `reject` when a wrong answer is close enough to slip through (for example "Benchmarking" for "Benchmaxing"). A test checks that no puzzle's answer is accepted by any other puzzle. Hint 2 also shows a fill-in-the-blanks pattern (`C______ W_____`), and "Show answer" gives up the round for 0. `label` on a picture is alt text only and is never shown. Make sure you have the rights to use any image you add.
+Answers are matched forgivingly (`src/lib/answer-match.ts`): case, spaces, hyphens and punctuation are ignored, and small typos are allowed in proportion to the answer's length (none for 3 letters or fewer, 1 up to 8, 2 up to 14, 3 beyond). Plurals and endings are accepted too ("context rot" also allows "context rotting"), and `accept` lists other wordings. Each hint takes 10% off a round's score in both games (so a low score loses less than a high one). Use `reject` when a wrong answer is close enough to slip through (for example "Open Claude" for "OpenClaw"). A test checks that no puzzle's answer is accepted by any other puzzle. Hint 2 also shows a fill-in-the-blanks pattern (`C______ W_____`), and "Show answer" gives up the round for 0. `label` on a picture is alt text only and is never shown. Use `{ edit: '− MEGA' }` for visible letter changes and `{ operator: 'minus' }` for subtraction between tiles (as in OCTOPUS − OCT). The newly sourced photos, screenshots and diagrams come from Wikimedia Commons, with the Eleven character still sourced from Everyeye. `public/puzzles/web/sources.json` records each image’s original URL, author and license. The in-game Image sources link opens `public/puzzles/credits.html`, a thumbnail gallery with source and download links. Keep those attributions with the images when deploying. Existing photographic clues are retained separately. Make sure you have the rights to use any image you add.
 
 ## Scoring
 
-Each game is 10 random rounds (`ROUNDS_PER_GAME` in `src/content/games.ts`), then a 4-question Vienna quiz (`QUIZ_LENGTH`).
+Architect the Agent is 3 random challenges and Find the Connection is 10 random puzzles (`rounds` in `src/content/games.ts`; round points are scaled to 10 so both rank fairly), then a 4-question Vienna quiz (`QUIZ_LENGTH`).
 
 A round is **passed** at a score of 85+: a harness mission earns "Harness Approved", and a connection puzzle needs no wrong guesses and at most one hint. Per round, the harness score is the share of the mission's needs covered, minus 15 per unneeded part; optional extras are never penalised and order doesn't matter. A connection puzzle starts at 100, minus 25 per wrong guess and 10 per hint (0 if the answer is revealed).
 

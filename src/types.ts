@@ -14,9 +14,12 @@ export type GameId = 'architect' | 'connect'
 /* ---------- Game 1: Architect the Agent ---------- */
 
 export type ComponentId =
-  | 'llm' | 'web-search' | 'memory' | 'calculator' | 'research-skill' | 'email'
-  | 'subagent' | 'database' | 'human-approval' | 'evaluation'
-  | 'calendar' | 'file-reader' | 'code-runner' | 'retrieval'
+  | 'llm' | 'web-search' | 'memory' | 'calculator' | 'email' | 'database' | 'human-approval'
+  | 'evaluation' | 'file-reader' | 'retrieval' | 'subagent' | 'code-sandbox'
+  | 'cache-checkpoint' | 'static-prompt' | 'timestamp-mover' | 'model-router' | 'small-model'
+  | 'frontier-model' | 'confidence-gate' | 'fallback-model' | 'ai-gateway' | 'classifier'
+  | 'injection-guard' | 'code-index' | 'code-search' | 'skills' | 'turn-limit'
+  | 'checkpoint-cleaner' | 'task-ledger'
 
 export interface HarnessComponent {
   id: ComponentId
@@ -77,12 +80,14 @@ export interface ClueTile {
   label: string
   /** Image under public/, e.g. '/puzzles/corn.jpeg'. */
   image: string
+  edit?: string
+  operator?: 'minus'
 }
 
 export interface Puzzle {
   id: string
   topic: string
-  /** Picture clues: say them aloud, in order, to get the term (corn + text + window). */
+  /** Picture clues read left to right, with explicit letter edits where needed. */
   tiles: ClueTile[]
   /** The answer players type. Matching ignores case, spaces and hyphens, and forgives small typos. */
   answer: string
@@ -136,5 +141,4 @@ export interface SessionOutcome {
 export interface QuizResult {
   correct: number
   total: number
-  skipped: boolean
 }

@@ -3,65 +3,74 @@ import { SCENARIOS } from '../content/scenarios'
 import { PUZZLES } from '../content/puzzles'
 import { BONUS_QUESTIONS } from '../content/bonus'
 import { HARNESS_COMPONENTS } from '../content/components'
-import { emptySlots, evaluateHarness, needsStatus, placeComponent, removeFromSlot, scenarioChoices } from './harness'
+import { emptySlots, evaluateHarness, needsStatus, placeComponent, removeFromSlot, scenarioChoices, withHintPenalty } from './harness'
 import { connectionScore, isPassed, sessionOutcome } from './outcome'
 import { QUIZ_LENGTH } from '../content/bonus'
-import { ROUNDS_PER_GAME } from '../content/games'
+import { roundsFor } from '../content/games'
 
-const news = SCENARIOS.find((s) => s.id === 'news-briefer')!
-const refund = SCENARIOS.find((s) => s.id === 'refund-desk')!
+const cost = SCENARIOS.find((s) => s.id === 'cut-the-cost')!
+const tickets = SCENARIOS.find((s) => s.id === 'wrong-tickets')!
 
 describe('evaluateHarness', () => {
   it('gives full marks when every need is covered', () => {
-    const r = evaluateHarness(news, ['web-search', 'evaluation', null, null])
+    const r = evaluateHarness(cost, ['cache-checkpoint', 'static-prompt', null, null])
     expect(r.score).toBe(100)
     expect(r.verdict).toBe('approved')
   })
 
   it('accepts any valid alternative for a need', () => {
-    expect(evaluateHarness(news, ['web-search', 'human-approval', null, null]).score).toBe(100)
+    expect(evaluateHarness(tickets, ['classifier', 'injection-guard', 'human-approval', null]).score).toBe(100)
+    expect(evaluateHarness(tickets, ['classifier', 'injection-guard', 'confidence-gate', null]).score).toBe(100)
   })
 
-  it('does not care about order or which socket is used', () => {
-    expect(evaluateHarness(news, [null, 'evaluation', null, 'web-search']).score).toBe(100)
+  it('does not care about order or which slot is used', () => {
+    expect(evaluateHarness(cost, [null, 'static-prompt', null, 'cache-checkpoint']).score).toBe(100)
   })
 
   it('never penalises optional extras', () => {
-    const r = evaluateHarness(news, ['web-search', 'evaluation', 'research-skill', 'memory'])
+    const r = evaluateHarness(cost, ['cache-checkpoint', 'static-prompt', 'memory', null])
     expect(r.score).toBe(100)
-    expect(r.placed['research-skill']).toBe('optional')
+    expect(r.placed.memory).toBe('optional')
   })
 
   it('deducts for distractors', () => {
-    const r = evaluateHarness(news, ['web-search', 'evaluation', 'email', null])
+    const r = evaluateHarness(cost, ['cache-checkpoint', 'static-prompt', 'email', null])
     expect(r.score).toBe(85)
     expect(r.placed.email).toBe('distractor')
   })
 
   it('reports each missing capability', () => {
-    const r = evaluateHarness(news, ['web-search', null, null, null])
+    const r = evaluateHarness(cost, ['cache-checkpoint', null, null, null])
     expect(r.score).toBe(50)
     expect(r.verdict).toBe('partial')
-    expect(r.feedback.find((f) => f.kind === 'missing')?.text).toContain('Double-check')
+    expect(r.feedback.find((f) => f.kind === 'missing')?.text).toContain('Keep the unchanging')
   })
 
   it('scores an empty harness as zero and never negative', () => {
-    expect(evaluateHarness(news, emptySlots(4)).score).toBe(0)
-    expect(evaluateHarness(news, ['email', 'calculator', 'database', null]).score).toBe(0)
-  })
-
-  it('requires approval for the sensitive scenario', () => {
-    expect(evaluateHarness(refund, ['database', 'human-approval', null, null]).score).toBe(100)
-    expect(evaluateHarness(refund, ['database', null, null, null]).score).toBe(50)
+    expect(evaluateHarness(cost, emptySlots(4)).score).toBe(0)
+    expect(evaluateHarness(cost, ['email', 'web-search', 'frontier-model', null]).score).toBe(0)
   })
 
   it('reports live need coverage', () => {
-    expect(needsStatus(news, ['web-search', null, null, null])).toEqual([true, false])
+    expect(needsStatus(cost, ['cache-checkpoint', null, null, null])).toEqual([true, false])
   })
 
   it('is deterministic', () => {
-    const slots = ['evaluation', 'web-search', 'calculator', null] as const
-    expect(evaluateHarness(news, [...slots])).toEqual(evaluateHarness(news, [...slots]))
+    const slots = ['static-prompt', 'cache-checkpoint', 'email', null] as const
+    expect(evaluateHarness(cost, [...slots])).toEqual(evaluateHarness(cost, [...slots]))
+  })
+})
+
+describe('hint penalty', () => {
+  it('takes 10% off the score, updates the verdict and says so', () => {
+    const perfect = evaluateHarness(cost, ['cache-checkpoint', 'static-prompt', null, null])
+    const r = withHintPenalty(perfect)
+    expect(r.score).toBe(90)
+    expect(r.verdict).toBe('approved')
+    expect(r.feedback.at(-1)?.text).toContain('Hint used')
+    expect(withHintPenalty(evaluateHarness(cost, emptySlots(4))).score).toBe(0)
+    expect(withHintPenalty(evaluateHarness(cost, ['cache-checkpoint', 'static-prompt', 'email', null])).score).toBe(77) // 85 less 10%
+    expect(withHintPenalty(evaluateHarness(cost, ['cache-checkpoint', null, null, null])).score).toBe(45) // 50 less 10%
   })
 })
 
@@ -89,7 +98,9 @@ describe('slot helpers', () => {
 describe('connection scoring', () => {
   it('penalises wrong guesses and hints, floors at zero', () => {
     expect(connectionScore(0, 0)).toBe(100)
-    expect(connectionScore(1, 1)).toBe(65)
+    expect(connectionScore(1, 1)).toBe(68) // 75, less 10%
+    expect(connectionScore(0, 2)).toBe(80)
+    expect(connectionScore(3, 1)).toBe(23) // a low score loses less than a high one
     expect(connectionScore(9, 2)).toBe(0)
   })
 })
@@ -121,8 +132,8 @@ describe('session outcome', () => {
 
 describe('content integrity', () => {
   it('has enough content for a full session', () => {
-    expect(SCENARIOS.length).toBeGreaterThanOrEqual(ROUNDS_PER_GAME)
-    expect(PUZZLES.length).toBeGreaterThanOrEqual(ROUNDS_PER_GAME)
+    expect(SCENARIOS.length).toBeGreaterThanOrEqual(roundsFor('architect'))
+    expect(PUZZLES.length).toBeGreaterThanOrEqual(roundsFor('connect'))
     expect(BONUS_QUESTIONS.length).toBeGreaterThanOrEqual(20)
     expect(BONUS_QUESTIONS.length).toBeGreaterThanOrEqual(QUIZ_LENGTH)
   })

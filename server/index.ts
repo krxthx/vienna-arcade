@@ -17,7 +17,8 @@ const db = openScoreDb(DB_PATH)
 
 const MIME: Record<string, string> = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css',
-  '.svg': 'image/svg+xml', '.png': 'image/png', '.ico': 'image/x-icon', '.json': 'application/json',
+  '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg',
+  '.ico': 'image/x-icon', '.json': 'application/json',
 }
 
 function send(res: ServerResponse, status: number, body: unknown, type = 'application/json') {

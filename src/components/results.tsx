@@ -1,4 +1,4 @@
-import { Check, Clock, Home, Lightbulb, RotateCcw, Sparkles, Trophy, X } from 'lucide-react'
+import { Check, Clock, Home, Lightbulb, Sparkles, Trophy, X } from 'lucide-react'
 import { motion } from 'motion/react'
 import { QUIZ_POINTS_LABEL } from '../lib/leaderboard'
 import { formatDuration } from '../lib/format'
@@ -14,7 +14,6 @@ interface Props {
   total: number
   seconds: number
   onLeaderboard: () => void
-  onPlayAgain: () => void
   onHome: () => void
 }
 
@@ -30,9 +29,9 @@ function Stat({ label, value, sub }: { label: string; value: string; sub?: strin
   )
 }
 
-export function Results({ outcome, quiz, playerName, rank, total, seconds, onLeaderboard, onPlayAgain, onHome }: Props) {
+export function Results({ outcome, quiz, playerName, rank, total, seconds, onLeaderboard, onHome }: Props) {
   const [shown, skip] = useCountUp(total)
-  const maxTotal = outcome.rounds.length + quiz.total
+  const maxTotal = 10 + quiz.total
   return (
     <div className="mx-auto flex w-full max-w-4xl flex-1 flex-col items-center justify-center gap-5 text-center" onClick={skip}>
       <motion.div initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', stiffness: 260, damping: 16 }}>
@@ -51,7 +50,7 @@ export function Results({ outcome, quiz, playerName, rank, total, seconds, onLea
           </p>
         </div>
         <Stat label="ROUNDS PASSED" value={`${outcome.passed}`} sub={`/ ${outcome.rounds.length}`} />
-        <Stat label="VIENNA QUIZ" value={quiz.skipped ? '–' : `${quiz.correct}`} sub={`/ ${quiz.total}`} />
+        <Stat label="VIENNA QUIZ" value={`${quiz.correct}`} sub={`/ ${quiz.total}`} />
         <div className="px-5 text-center">
           <p className="flex items-center justify-center gap-1 font-mono text-xs tracking-widest text-slate-300">
             <Clock className="h-3 w-3" aria-hidden /> TIME
@@ -90,17 +89,10 @@ export function Results({ outcome, quiz, playerName, rank, total, seconds, onLea
         <button
           type="button"
           autoFocus
-          onClick={onPlayAgain}
+          onClick={onHome}
           className="inline-flex min-h-20 items-center gap-3 rounded-2xl bg-teal px-12 text-2xl font-black text-ink-950 hover:brightness-110 active:scale-95"
         >
-          <RotateCcw className="h-7 w-7" aria-hidden /> Play Again
-        </button>
-        <button
-          type="button"
-          onClick={onHome}
-          className="inline-flex min-h-20 items-center gap-3 rounded-2xl border-2 border-ink-600 bg-ink-800 px-8 text-xl font-bold hover:border-volt active:scale-95"
-        >
-          <Home className="h-6 w-6" aria-hidden /> Back to Games
+          <Home className="h-7 w-7" aria-hidden /> Back to Games
         </button>
         <button
           type="button"

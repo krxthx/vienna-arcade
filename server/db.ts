@@ -74,7 +74,7 @@ export function openScoreDb(path: string) {
 
   return {
     add(s: Submission, at = Date.now()): { entry: LeaderboardEntry; rank: number } {
-      const total = totalScore(s.roundsPassed, s.quizCorrect)
+      const total = totalScore(s.roundsPassed, s.roundsTotal, s.quizCorrect)
       const row = insert.get(s.name, s.email, s.game, s.roundsPassed, s.roundsTotal, s.quizCorrect, s.quizTotal, total, s.seconds, at) as unknown as Row
       const { ahead } = rank.get(
         row.total, row.total, row.seconds, row.total, row.seconds, row.at, row.total, row.seconds, row.at, row.id,

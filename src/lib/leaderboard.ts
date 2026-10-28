@@ -9,7 +9,7 @@ export interface LeaderboardEntry {
   roundsTotal: number
   quizCorrect: number
   quizTotal: number
-  /** Points: rounds passed + quiz answers correct. */
+  /** Points: rounds passed (scaled to 10) + quiz answers correct. */
   total: number
   /** Time taken in seconds. Breaks ties: faster ranks higher. */
   seconds: number
@@ -34,11 +34,12 @@ export interface Submission {
 export const MAX_NAME_LENGTH = 24
 export const MAX_EMAIL_LENGTH = 254
 /** One-line explanation of how players are ranked, shown on the results and leaderboard screens. */
-export const QUIZ_POINTS_LABEL = 'Points = rounds passed + quiz answers right. Ties go to the faster time.'
+export const QUIZ_POINTS_LABEL = 'Points = rounds passed (out of 10) + quiz answers right. Ties go to the faster time.'
 const MAX_SECONDS = 24 * 60 * 60
 
-export function totalScore(roundsPassed: number, quizCorrect: number): number {
-  return roundsPassed + quizCorrect
+/** Rounds are scaled to 10 so games with different lengths compete fairly. */
+export function totalScore(roundsPassed: number, roundsTotal: number, quizCorrect: number): number {
+  return Math.round((roundsPassed / roundsTotal) * 10) + quizCorrect
 }
 
 /** Pragmatic check: something@something.tld, no spaces. */

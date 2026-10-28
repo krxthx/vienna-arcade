@@ -1,4 +1,5 @@
-import { Download, Medal, Trash2, Wrench } from 'lucide-react'
+import { Download, Trash2, Wrench } from 'lucide-react'
+import { motion } from 'motion/react'
 import { useCallback, useEffect, useState } from 'react'
 import { GAMES } from '../content/games'
 import { clearScores, fetchCsv, fetchScores } from '../lib/api'
@@ -34,6 +35,11 @@ export function Leaderboard({ highlightId, onBack }: Props) {
     )
   }, [])
   useEffect(load, [load])
+  // The board stays on screen and a second device may add scores, so refresh quietly.
+  useEffect(() => {
+    const id = setInterval(() => fetchScores().then(setEntries, () => {}), 10_000)
+    return () => clearInterval(id)
+  }, [])
 
   const shown = sortEntries(entries ?? []).filter((e) => filter === 'all' || e.game === filter)
   const top = shown.slice(0, LIMIT)
@@ -82,7 +88,7 @@ export function Leaderboard({ highlightId, onBack }: Props) {
   )
 
   return (
-    <div className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-5 py-2">
+    <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-4 py-2">
       <div className="text-center">
         <p className="font-mono text-sm font-bold tracking-[0.2em] text-ember">TOP PLAYERS</p>
         <h1 className="text-5xl font-black text-white sm:text-6xl">Leaderboard</h1>
@@ -105,27 +111,7 @@ export function Leaderboard({ highlightId, onBack }: Props) {
       ) : top.length === 0 ? (
         <p className="rounded-2xl bg-ink-900 p-10 text-center text-xl text-slate-300">No scores yet. Be the first!</p>
       ) : (
-        <ol className="flex flex-col gap-2" aria-label="Top scores">
-          {top.map((e, i) => (
-            <li
-              key={e.id}
-              className={`flex items-center gap-4 rounded-2xl border-2 px-5 py-3 ${
-                e.id === highlightId ? 'border-teal bg-teal/10' : 'border-ink-700 bg-ink-900'
-              }`}
-            >
-              <span className="flex w-12 justify-center text-2xl font-black tabular-nums text-slate-200">
-                {i < 3 ? <Medal className={['text-ember', 'text-slate-300', 'text-orange-300'][i]} aria-label={`Rank ${i + 1}`} /> : i + 1}
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block truncate text-2xl font-black text-white">{e.name}</span>
-                <span className="block text-sm text-slate-400">
-                  {gameName(e.game)} · rounds {e.roundsPassed}/{e.roundsTotal} · quiz {e.quizCorrect}/{e.quizTotal} · {formatDuration(e.seconds)}
-                </span>
-              </span>
-              <span className="text-3xl font-black tabular-nums text-teal">{e.total}</span>
-            </li>
-          ))}
-        </ol>
+        <ScoreTable entries={top} highlightId={highlightId} gameName={gameName} />
       )}
 
       <p className="text-center text-sm text-slate-400">{QUIZ_POINTS_LABEL}</p>
@@ -192,6 +178,61 @@ export function Leaderboard({ highlightId, onBack }: Props) {
           {clearError && <p className="w-full text-right text-sm text-ember">Not allowed. Check the organizer key, or clear from the server machine.</p>}
         </div>
       )}
+    </div>
+  )
+}
+
+type NameOf = (id: GameId) => string
+
+const COLUMNS = 'grid-cols-[3rem_minmax(0,1fr)_5rem_5rem_6rem_4rem] sm:grid-cols-[3.5rem_minmax(0,1.4fr)_minmax(0,1fr)_6rem_6rem_6rem_5rem]'
+
+function ScoreTable({ entries, highlightId, gameName }: { entries: LeaderboardEntry[]; highlightId?: string; gameName: NameOf }) {
+  return (
+    <div className="overflow-hidden rounded-2xl border-2 border-ink-700 bg-ink-900" role="table" aria-label="Top scores">
+      <div role="row" className={`grid ${COLUMNS} items-center gap-3 border-b-2 border-ink-700 bg-ink-800 px-5 py-3 font-mono text-xs font-bold tracking-[0.18em] text-slate-400`}>
+        <span role="columnheader">#</span>
+        <span role="columnheader">PLAYER</span>
+        <span role="columnheader" className="hidden sm:block">GAME</span>
+        <span role="columnheader" className="text-center">ROUNDS</span>
+        <span role="columnheader" className="hidden text-center sm:block">QUIZ</span>
+        <span role="columnheader" className="text-center">TIME</span>
+        <span role="columnheader" className="text-right">PTS</span>
+      </div>
+      {entries.map((e, i) => (
+        <motion.div
+          key={e.id}
+          role="row"
+          layout
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: i * 0.04 }}
+          className={`grid ${COLUMNS} items-center gap-3 px-5 py-2.5 ${i > 0 ? 'border-t border-ink-700' : ''} ${
+            e.id === highlightId ? 'bg-teal/10' : i % 2 ? 'bg-ink-950/30' : ''
+          }`}
+        >
+          <span role="cell" className={`text-2xl font-black tabular-nums ${i === 0 ? 'text-ember' : 'text-slate-400'}`}>
+            {i + 1}
+          </span>
+          <span role="cell" className="truncate text-2xl font-black text-white">
+            {e.name}
+          </span>
+          <span role="cell" className="hidden truncate text-slate-300 sm:block">
+            {gameName(e.game)}
+          </span>
+          <span role="cell" className="text-center font-mono text-lg tabular-nums text-slate-200">
+            {e.roundsPassed}/{e.roundsTotal}
+          </span>
+          <span role="cell" className="hidden text-center font-mono text-lg tabular-nums text-slate-200 sm:block">
+            {e.quizCorrect}/{e.quizTotal}
+          </span>
+          <span role="cell" className="text-center font-mono text-lg tabular-nums text-slate-300">
+            {formatDuration(e.seconds)}
+          </span>
+          <span role="cell" className="text-right text-3xl font-black tabular-nums text-teal">
+            {e.total}
+          </span>
+        </motion.div>
+      ))}
     </div>
   )
 }
