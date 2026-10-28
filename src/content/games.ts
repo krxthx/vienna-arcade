@@ -1,3 +1,4 @@
+import { ARCHITECT_ROUNDS, CONNECT_ROUNDS } from "../config";
 import type { Accent, GameId } from "../types";
 
 export interface GameInfo {
@@ -21,7 +22,7 @@ export const GAMES: GameInfo[] = [
     tagline: "Build the right AI harness for the job.",
     duration: "~5 min",
     accent: "violet",
-    rounds: 3,
+    rounds: ARCHITECT_ROUNDS,
     learned:
       "A harness is everything around the model: tools, memory and checks. Match each part to what the job really needs.",
   },
@@ -32,7 +33,7 @@ export const GAMES: GameInfo[] = [
     tagline: "Discover the hidden connections in Applied AI.",
     duration: "~20 min",
     accent: "teal",
-    rounds: 44,
+    rounds: CONNECT_ROUNDS,
     learned:
       "Applied AI is full of ideas hiding in plain sight, from context windows to model routing. Now you can spot them.",
   },

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { BONUS_QUESTIONS, QUIZ_LENGTH } from './content/bonus'
+import { VIENNA_QUIZ_QUESTIONS } from './config'
+import { BONUS_QUESTIONS } from './content/bonus'
 import { PUZZLES } from './content/puzzles'
 import { SCENARIOS } from './content/scenarios'
 import { ArchitectGame } from './components/architect-game'
@@ -56,7 +57,7 @@ function App() {
   }, [])
 
   const toQuiz = (outcome: SessionOutcome) => {
-    setScreen({ name: 'quiz', outcome, questions: pickMany(BONUS_QUESTIONS, QUIZ_LENGTH) })
+    setScreen({ name: 'quiz', outcome, questions: pickMany(BONUS_QUESTIONS, VIENNA_QUIZ_QUESTIONS) })
   }
 
   /** Records a finished round, then moves to the next round or on to the quiz. */

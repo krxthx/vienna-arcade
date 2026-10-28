@@ -5,7 +5,7 @@ import { BONUS_QUESTIONS } from '../content/bonus'
 import { HARNESS_COMPONENTS } from '../content/components'
 import { emptySlots, evaluateHarness, needsStatus, placeComponent, removeFromSlot, scenarioChoices, withHintPenalty } from './harness'
 import { connectionScore, isPassed, sessionOutcome } from './outcome'
-import { QUIZ_LENGTH } from '../content/bonus'
+import { VIENNA_QUIZ_QUESTIONS } from '../config'
 import { roundsFor } from '../content/games'
 
 const cost = SCENARIOS.find((s) => s.id === 'cut-the-cost')!
@@ -121,7 +121,7 @@ describe('session outcome', () => {
     expect(good.title).toBe('Harness Approved!')
     expect(good.message).toContain('perfect run')
     expect(sessionOutcome('architect', rounds(100, 100, 0, 0)).title).toBe('Evaluation Complete!')
-    expect(sessionOutcome('architect', rounds(100, 0, 0, 0)).title).toBe('One More Iteration?')
+    expect(sessionOutcome('architect', rounds(100, 0, 0, 0)).title).toBe('Evaluation Complete!')
     const connect = sessionOutcome('connect', rounds(100, 100, 100, 100, 50))
     expect(connect.title).toBe('Connection Found!')
     expect(connect.passed).toBe(4)
@@ -135,7 +135,7 @@ describe('content integrity', () => {
     expect(SCENARIOS.length).toBeGreaterThanOrEqual(roundsFor('architect'))
     expect(PUZZLES.length).toBeGreaterThanOrEqual(roundsFor('connect'))
     expect(BONUS_QUESTIONS.length).toBeGreaterThanOrEqual(20)
-    expect(BONUS_QUESTIONS.length).toBeGreaterThanOrEqual(QUIZ_LENGTH)
+    expect(BONUS_QUESTIONS.length).toBeGreaterThanOrEqual(VIENNA_QUIZ_QUESTIONS)
   })
 
   it.each(SCENARIOS)('scenario $id is consistent and perfectly solvable', (s) => {

@@ -52,7 +52,8 @@ All content is typed data, with no UI changes needed:
 | Harness scenarios (scoring rules, order rules, explanations) | `src/content/scenarios.ts` |
 | Harness components | `src/content/components.ts` |
 | Connection puzzles | `src/content/puzzles.ts` |
-| Vienna quiz bank (20 now) and `QUIZ_LENGTH` (4) | `src/content/bonus.ts` |
+| Vienna quiz bank | `src/content/bonus.ts` |
+| Session lengths (Architect rounds, Connection puzzles, Vienna quiz questions) | `src/config.ts` |
 
 `src/lib/harness.test.ts` checks every scenario for consistency and that a perfect score is reachable, so mistakes in new content fail the tests.
 
@@ -82,7 +83,7 @@ Answers are matched forgivingly (`src/lib/answer-match.ts`): case, spaces, hyphe
 
 ## Scoring
 
-Architect the Agent is 3 random challenges and Find the Connection is all 44 puzzles in random order (`rounds` in `src/content/games.ts`; round points are scaled to 10 so both rank fairly), then a 4-question Vienna quiz (`QUIZ_LENGTH`).
+Both games end with the Vienna quiz. How many Architect rounds, Connection puzzles and quiz questions a session has is set in `src/config.ts`; round points are scaled to 10 so both rank fairly.
 
 A round is **passed** at a score of 85+: a harness mission earns "Harness Approved", and a connection puzzle needs no wrong guesses and at most one hint. Per round, the harness score is the share of the mission's needs covered, minus 15 per unneeded part; optional extras are never penalised and order doesn't matter. A connection puzzle starts at 100, minus 25 per wrong guess and 10 per hint (0 if the answer is revealed).
 

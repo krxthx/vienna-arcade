@@ -6,7 +6,7 @@ export function architectOutcome(scenario: Scenario, result: HarnessResult): Gam
   const byVerdict = {
     approved: { title: 'Harness Approved!', message: 'Every essential piece is in place. Ship it.' },
     partial: { title: 'Evaluation Complete!', message: 'A solid start. A few tweaks would make it great.' },
-    retry: { title: 'One More Iteration?', message: 'Close, but the harness needs another pass.' },
+    retry: { title: 'Evaluation Complete!', message: 'Not quite there. A few key parts were missing.' },
   } as const
   return {
     game: 'architect',
@@ -40,7 +40,7 @@ export function sessionOutcome(game: GameId, rounds: readonly RoundScore[]): Ses
   const passed = rounds.filter((r) => isPassed(r.score)).length
   const ratio = rounds.length === 0 ? 0 : passed / rounds.length
   const top = game === 'architect' ? 'Harness Approved!' : 'Connection Found!'
-  const title = ratio >= 0.8 ? top : ratio >= 0.5 ? 'Evaluation Complete!' : 'One More Iteration?'
+  const title = ratio >= 0.8 ? top : ratio >= 0.5 ? 'Evaluation Complete!' : 'Evaluation Complete!'
   const message =
     passed === rounds.length
       ? `A perfect run: all ${rounds.length} rounds passed.`

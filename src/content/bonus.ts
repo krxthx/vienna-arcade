@@ -1,12 +1,11 @@
 import type { BonusQuestion } from '../types'
 
-/** Questions asked in each quiz, drawn at random from the bank below. */
-export const QUIZ_LENGTH = 4
+/** How many questions each quiz asks is set in src/config.ts. */
 
 /**
  * Vienna quiz bank. Questions follow the ideas on the Project Vienna landing page
  * and the Project Vienna overview deck (model, harness and serving evaluated against real workloads). Each quiz draws
- * QUIZ_LENGTH random questions from here.
+ * random questions from here.
  */
 export const BONUS_QUESTIONS: BonusQuestion[] = [
   {
