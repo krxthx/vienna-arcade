@@ -70,13 +70,25 @@ export function wordForms(target: string): string[] {
   return [...forms]
 }
 
-/** Is `input` an acceptable answer to this puzzle, allowing for small spelling mistakes? */
+/** Every ordering of a short phrase's words ("model fallback" -> also "fallback model"), as normalized strings. */
+function wordOrders(phrase: string): string[] {
+  const words = phrase.split(/[\s-]+/).map(normalizeAnswer).filter(Boolean)
+  if (words.length < 2 || words.length > 3) return [words.join('')]
+  const orders: string[][] = []
+  const permute = (rest: string[], picked: string[]) => {
+    if (rest.length === 0) return void orders.push(picked)
+    rest.forEach((w, i) => permute(rest.filter((_, j) => j !== i), [...picked, w]))
+  }
+  permute(words, [])
+  return orders.map((o) => o.join(''))
+}
+
+/** Is `input` an acceptable answer to this puzzle, allowing for small spelling mistakes and reordered words? */
 export function isAnswerCorrect(input: string, puzzle: Pick<Puzzle, 'answer' | 'accept' | 'reject'>): boolean {
   const typed = normalizeAnswer(input)
   if (typed.length === 0) return false
   if ((puzzle.reject ?? []).some((r) => normalizeAnswer(r) === typed)) return false
-  return [puzzle.answer, ...(puzzle.accept ?? [])].some((candidate) => {
-    const target = normalizeAnswer(candidate)
+  return [puzzle.answer, ...(puzzle.accept ?? [])].flatMap(wordOrders).some((target) => {
     const typos = allowedTypos(target.length)
     return wordForms(target).some((form) => editDistance(typed, form) <= typos)
   })

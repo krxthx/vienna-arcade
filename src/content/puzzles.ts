@@ -1,9 +1,8 @@
 import type { ClueTile, Puzzle } from '../types.ts'
 
-const pic = (file: string, label: string, options?: Pick<ClueTile, 'edit' | 'operator'>): ClueTile => ({
+const pic = (file: string, label: string): ClueTile => ({
   image: `/puzzles/${file}`,
   label,
-  ...options,
 })
 
 export const PUZZLES: Puzzle[] = [
@@ -207,18 +206,6 @@ export const PUZZLES: Puzzle[] = [
     difficulty: 1,
   },
   {
-    id: 'rebus-model-training',
-    topic: 'Model training',
-    tiles: [
-      pic('fashion-model.jpeg', 'A fashion model'),
-      pic('web/train.jpg', 'A train', { edit: '+ ING' }),
-    ],
-    answer: 'Model Training',
-    hints: ['How a model learns from examples.', 'A model + train, then add ING.'],
-    explanation: 'Model + train + ING = Model Training: adjusting a model’s learned parameters using training data.',
-    difficulty: 1,
-  },
-  {
     id: 'rebus-decision-tree',
     topic: 'AI foundations',
     tiles: [
@@ -229,18 +216,6 @@ export const PUZZLES: Puzzle[] = [
     hints: ['A model that follows a series of branching choices.', 'A decision + a tree.'],
     explanation: 'Decision + tree = Decision Tree: a model that follows branches based on conditions to reach a prediction.',
     difficulty: 1,
-  },
-  {
-    id: 'rebus-nemotron',
-    topic: 'AI model names',
-    tiles: [
-      pic('nemo.jpeg', 'Nemo the clownfish'),
-      pic('megatron.png', 'Megatron from Transformers', { edit: '− MEGA' }),
-    ],
-    answer: 'Nemotron',
-    hints: ['A model family from NVIDIA.', 'Nemo + Megatron minus MEGA.'],
-    explanation: 'NEMO + (MEGATRON − MEGA) = Nemotron, a model family from NVIDIA.',
-    difficulty: 2,
   },
   {
     id: 'rebus-elevenlabs',
@@ -284,12 +259,12 @@ export const PUZZLES: Puzzle[] = [
     topic: 'Prompt caching',
     tiles: [
       pic('web/prompt.png', 'A command prompt window'),
-      pic('web/money.png', 'Cash', { edit: '+ ING' }),
+      pic('web/money.png', 'Cash'),
     ],
     answer: 'Prompt Caching',
     accept: ['Prompt Cache'],
-    hints: ['Reusing work on repeated prompt prefixes.', 'Prompt + cash + ING. Say the result aloud.'],
-    explanation: 'Prompt + cash + ING sounds like Prompt Caching: reusing computation for matching prompt prefixes to reduce repeated work.',
+    hints: ['Reusing work on repeated prompt prefixes.', 'Say them out loud: “prompt” + “cash”.'],
+    explanation: 'Prompt + cash sounds like Prompt Caching: reusing computation for matching prompt prefixes to reduce repeated work.',
     difficulty: 2,
   },
   {
@@ -303,18 +278,6 @@ export const PUZZLES: Puzzle[] = [
     answer: 'Inference',
     hints: ['Running a trained model to get an answer.', 'Say them out loud: “in” + “fur” + “ants”.'],
     explanation: 'In + fur + ants = Inference: using a trained model to produce answers.',
-    difficulty: 2,
-  },
-  {
-    id: 'rebus-opus',
-    topic: 'AI model names',
-    tiles: [
-      pic('octopus.png', 'An octopus'),
-      pic('oct-calendar.png', 'A calendar page showing OCT', { operator: 'minus' }),
-    ],
-    answer: 'Opus',
-    hints: ['A Claude model tier.', 'Take the octopus, and remove the month.'],
-    explanation: 'OCTOPUS − OCT = Opus, a Claude model name.',
     difficulty: 2,
   },
   {
@@ -346,11 +309,12 @@ export const PUZZLES: Puzzle[] = [
     topic: 'AI model names',
     tiles: [
       pic('letter-g.png', 'The letter G'),
-      pic('web/rock.jpg', 'A rock', { edit: '− C' }),
+      pic('web/rock.jpg', 'A rock'),
     ],
     answer: 'Grok',
-    hints: ['An AI assistant from xAI.', 'G + ROCK minus C.'],
-    explanation: 'G + (ROCK − C) = Grok, an AI assistant from xAI.',
+    accept: ['G Rock'],
+    hints: ['An AI assistant from xAI.', 'Say them out loud: “G” + “rock”.'],
+    explanation: 'G + rock sounds like Grok, an AI assistant from xAI.',
     difficulty: 1,
   },
   {
@@ -383,7 +347,7 @@ export const PUZZLES: Puzzle[] = [
     tiles: [
       pic('spy-icon.jpeg', 'A secret agent'),
       pic('web/letter-s.png', 'The letter S'),
-      pic('campfire.jpeg', 'A warm fire'),
+      pic('web/warm.png', 'A hot cup of coffee'),
     ],
     answer: 'Agent Swarm',
     hints: ['Many agents working on a task together.', 'Say them out loud: “agent” + “S” + “warm”.'],
@@ -401,18 +365,6 @@ export const PUZZLES: Puzzle[] = [
     hints: ['Watching how a deployed model behaves over time.', 'A model + monitoring a live signal.'],
     explanation: 'Model + monitoring = Model Monitoring: tracking quality, errors, latency and other signals after deployment.',
     difficulty: 2,
-  },
-  {
-    id: 'rebus-prompt-chaining',
-    topic: 'Agent harnesses',
-    tiles: [
-      pic('web/prompt.png', 'A command prompt window'),
-      pic('web/chain.jpg', 'A chain', { edit: '+ ING' }),
-    ],
-    answer: 'Prompt Chaining',
-    hints: ['One model call feeds into the next.', 'A prompt + chain, then add ING.'],
-    explanation: 'Prompt + chain + ING = Prompt Chaining: passing the output of one prompt into a later prompt.',
-    difficulty: 1,
   },
   {
     id: 'rebus-ai-gateway',

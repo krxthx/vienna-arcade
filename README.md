@@ -3,7 +3,7 @@
 A booth-friendly arcade with two mini-games about Applied AI. Each play is 10 random rounds, with a name and email prompt first, a 4-question Vienna quiz after it, and a results screen. Scores go to a SQLite database through a tiny Node server, so several devices can share one leaderboard. There are no accounts, and no external services or network calls.
 
 - **Architect the Agent** – read a plain-language mission, plug parts into a harness around the model (drag, or tap then tap), then run a deterministic evaluation.
-- **Find the Connection** – decode picture rebuses into AI terms; optional progressive hints and visible letter edits.
+- **Find the Connection** – decode picture rebuses into AI terms; optional progressive hints.
 
 Stack: Vite, React 19, TypeScript, Tailwind CSS v4, Motion, Lucide, Vitest, Oxlint, Node + SQLite.
 (The repo was scaffolded with Vite, so it was kept rather than switching to Next.js.)
@@ -58,27 +58,27 @@ All content is typed data, with no UI changes needed:
 
 ## Picture puzzles
 
-Find the Connection is picture-only and **free-text**: players see 1–4 pictures, read them left to right, apply visible letter edits, and type the AI term (CORN − R + TEXT + WINDOW = Context Window). The 38-puzzle bank is the source of truth in `src/content/puzzles.ts`; SQLite stores leaderboard scores only, so puzzle changes need a rebuild rather than a database migration. Images found through web search are downloaded unchanged under `public/puzzles/web/` and work offline. The custom artwork from the earlier iteration has been removed. Put additional image files in `public/puzzles/` and add a puzzle:
+Find the Connection is picture-only and **free-text**: players see 1–4 pictures, read them left to right, and type the AI term (CORN + TEXT + WINDOW ≈ Context Window). The 34-puzzle bank is the source of truth in `src/content/puzzles.ts`; SQLite stores leaderboard scores only, so puzzle changes need a rebuild rather than a database migration. Images found through web search are downloaded unchanged under `public/puzzles/web/` and work offline. The custom artwork from the earlier iteration has been removed. Put additional image files in `public/puzzles/` and add a puzzle:
 
 ```ts
 {
   id: 'rebus-context-window',
   topic: 'Context engineering',
   tiles: [
-    pic('corn-cob.jpeg', 'Corn', { edit: '− R' }),
+    pic('corn-cob.jpeg', 'Corn'),
     pic('chat-bubbles.jpeg', 'Text messages'),
     pic('window.jpeg', 'A window'),
   ],
   answer: 'Context Window',
   accept: ['CW'],              // optional extra wordings (abbreviations, variants)
   reject: ['Context Rot'],     // optional near-misses that must NOT count
-  hints: ['The information available to a model.', 'Corn minus R, then text and window.'],
+  hints: ['The information available to a model.', 'Say them out loud: “con” + “text” + “window”.'],
   explanation: '...',
   difficulty: 1,
 }
 ```
 
-Answers are matched forgivingly (`src/lib/answer-match.ts`): case, spaces, hyphens and punctuation are ignored, and small typos are allowed in proportion to the answer's length (none for 3 letters or fewer, 1 up to 8, 2 up to 14, 3 beyond). Plurals and endings are accepted too ("context rot" also allows "context rotting"), and `accept` lists other wordings. Each hint takes 10% off a round's score in both games (so a low score loses less than a high one). Use `reject` when a wrong answer is close enough to slip through (for example "Open Claude" for "OpenClaw"). A test checks that no puzzle's answer is accepted by any other puzzle. Hint 2 also shows a fill-in-the-blanks pattern (`C______ W_____`), and "Show answer" gives up the round for 0. `label` on a picture is alt text only and is never shown. Use `{ edit: '− MEGA' }` for visible letter changes and `{ operator: 'minus' }` for subtraction between tiles (as in OCTOPUS − OCT). The newly sourced photos, screenshots and diagrams come from Wikimedia Commons, with the Eleven character still sourced from Everyeye. `public/puzzles/web/sources.json` records each image’s original URL, author and license. The in-game Image sources link opens `public/puzzles/credits.html`, a thumbnail gallery with source and download links. Keep those attributions with the images when deploying. Existing photographic clues are retained separately. Make sure you have the rights to use any image you add.
+Answers are matched forgivingly (`src/lib/answer-match.ts`): case, spaces, hyphens and punctuation are ignored, and small typos are allowed in proportion to the answer's length (none for 3 letters or fewer, 1 up to 8, 2 up to 14, 3 beyond). Plurals and endings are accepted too ("context rot" also allows "context rotting"), and `accept` lists other wordings. Each hint takes 10% off a round's score in both games (so a low score loses less than a high one). Use `reject` when a wrong answer is close enough to slip through (for example "Open Claude" for "OpenClaw"). A test checks that no puzzle's answer is accepted by any other puzzle. Hint 2 also shows a fill-in-the-blanks pattern (`C______ W_____`), and "Show answer" gives up the round for 0. `label` on a picture is alt text only and is never shown.  Every picture must contribute a whole word or sound; no letter edits or subtraction. The newly sourced photos, screenshots and diagrams come from Wikimedia Commons, with the Eleven character still sourced from Everyeye. `public/puzzles/web/sources.json` records each image’s original URL, author and license. Existing photographic clues are retained separately. Make sure you have the rights to use any image you add.
 
 ## Scoring
 

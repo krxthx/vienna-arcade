@@ -16,18 +16,15 @@ describe('picture puzzles', () => {
     for (const puzzle of PUZZLES) {
       expect(puzzle.tiles.length, puzzle.id).toBeGreaterThanOrEqual(1)
       expect(puzzle.tiles.length, puzzle.id).toBeLessThanOrEqual(4)
-      expect(puzzle.tiles[0].operator, puzzle.id).toBeUndefined()
       expect(puzzle.hints.every((hint) => hint.trim().length > 0), puzzle.id).toBe(true)
       expect(puzzle.tiles.every((tile) => tile.label.trim().length > 0), puzzle.id).toBe(true)
     }
   })
 
-  it('shows the subtraction and letter edits needed to solve the clues', () => {
-    const find = (id: string) => PUZZLES.find((p) => p.id === id)!
-    expect(find('rebus-opus').tiles[1].operator).toBe('minus')
-    expect(find('rebus-context-window').tiles[0].edit).toBeUndefined() // the corn tile carries no edit
-    expect(find('rebus-nemotron').tiles[1].edit).toBe('− MEGA')
-    expect(find('rebus-grok').tiles[1].edit).toBe('− C')
+  it('joins the pictures as they are, with no letter edits or subtraction', () => {
+    for (const puzzle of PUZZLES) {
+      for (const tile of puzzle.tiles) expect(Object.keys(tile).sort(), puzzle.id).toEqual(['image', 'label'])
+    }
   })
 
   it('records sources and licenses for every downloaded web image', () => {

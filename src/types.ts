@@ -80,14 +80,12 @@ export interface ClueTile {
   label: string
   /** Image under public/, e.g. '/puzzles/corn.jpeg'. */
   image: string
-  edit?: string
-  operator?: 'minus'
 }
 
 export interface Puzzle {
   id: string
   topic: string
-  /** Picture clues read left to right, with explicit letter edits where needed. */
+  /** Picture clues read left to right and joined together. */
   tiles: ClueTile[]
   /** The answer players type. Matching ignores case, spaces and hyphens, and forgives small typos. */
   answer: string

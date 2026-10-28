@@ -72,18 +72,6 @@
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
   },
   {
-    "file": "/puzzles/web/train.jpg",
-    "title": "Steam locomotive l 6213 in Railway Museum Toronto, Canada..jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:Steam_locomotive_l_6213_in_Railway_Museum_Toronto,_Canada..jpg",
-    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/Steam_locomotive_l_6213_in_Railway_Museum_Toronto%2C_Canada..jpg/960px-Steam_locomotive_l_6213_in_Railway_Museum_Toronto%2C_Canada..jpg",
-    "author": "Pierre André Leclercq",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "description": "Canadian National 4-8-4 steam locomotive Canadian National 6213 stationed just outside the coaling tower in the Toronto railway museum.- Railway Museum Toronto, Canada.",
-    "date": "Taken on 30 September 2017, 17:40:08",
-    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
-  },
-  {
     "file": "/puzzles/web/tree.jpg",
     "title": "Oak tree Sunol Regional Wilderness California 2023 dllu.jpg",
     "source": "https://commons.wikimedia.org/wiki/File:Oak_tree_Sunol_Regional_Wilderness_California_2023_dllu.jpg",
@@ -272,5 +260,17 @@
     "license": "Copyright Netflix; no open license stated",
     "licenseUrl": "",
     "modifications": "None; downloaded unchanged from the source."
+  },
+  {
+    "file": "/puzzles/web/warm.png",
+    "title": "Black Coffee and Tea in White Cup is Hot.png",
+    "source": "https://commons.wikimedia.org/wiki/File:Black_Coffee_and_Tea_in_White_Cup_is_Hot.png",
+    "download": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Black_Coffee_and_Tea_in_White_Cup_is_Hot.png/960px-Black_Coffee_and_Tea_in_White_Cup_is_Hot.png",
+    "author": "epSos.de",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "description": "Hot black coffee in a white cup on a wooden table.",
+    "date": "2012-10-22",
+    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
   }
 ]

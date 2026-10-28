@@ -46,15 +46,15 @@ export function ConnectionGame({ puzzle, round, onComplete }: Props) {
         <RoundProgress number={round.number} total={round.total} className="mb-2" />
         <p className="font-mono text-sm font-bold tracking-[0.2em] text-teal">PICTURE PUZZLE</p>
         <h1 className="mt-1 text-4xl font-black text-white sm:text-5xl">What AI term is hidden here?</h1>
-        <p className="mt-2 text-sm text-slate-400">Read left to right. Apply any letter edits shown below a picture.</p>
+        <p className="mt-2 text-sm text-slate-400">Read left to right and put the pictures together.</p>
       </div>
 
       <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5">
         {puzzle.tiles.map((tile, i) => (
           <Fragment key={tile.image + i}>
             {i > 0 && (
-              <span className="text-4xl font-black text-slate-400" role="img" aria-label={tile.operator === 'minus' ? 'minus' : 'plus'}>
-                {tile.operator === 'minus' ? '−' : '+'}
+              <span className="text-4xl font-black text-slate-400" role="img" aria-label="plus">
+                +
               </span>
             )}
             <motion.div
@@ -65,7 +65,6 @@ export function ConnectionGame({ puzzle, round, onComplete }: Props) {
               className={`flex flex-col items-center justify-center rounded-2xl border-2 bg-ink-900 p-1.5 ${state === 'solved' ? `${TILE_COLORS[i % 4]} shadow-[0_0_30px_-8px_currentColor]` : 'border-ink-600'}`}
             >
               <img src={tile.image} alt={tile.label} draggable={false} className="min-h-0 w-full flex-1 rounded-xl bg-slate-100 object-contain" />
-              {tile.edit && <span className="mt-1 rounded-lg bg-teal/15 px-4 py-1 font-mono text-xl font-bold text-teal" aria-label={`Letter edit: ${tile.edit.replace('−', 'remove').replace('+', 'add')}`}>{tile.edit}</span>}
             </motion.div>
           </Fragment>
         ))}
@@ -145,7 +144,7 @@ export function ConnectionGame({ puzzle, round, onComplete }: Props) {
             </button>
           </form>
           <p className="-mt-3 min-h-6 text-center text-lg text-ember" aria-live="polite">
-            {wrong > 0 ? 'Not quite. Check the pictures and any letter edits, then try again.' : ''}
+            {wrong > 0 ? 'Not quite. Check the pictures, then try again.' : ''}
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <button
@@ -166,7 +165,6 @@ export function ConnectionGame({ puzzle, round, onComplete }: Props) {
           </div>
         </>
       )}
-      <a href="/puzzles/credits.html" target="_blank" rel="noreferrer" className="self-center text-xs text-slate-400 underline decoration-slate-600 underline-offset-4 hover:text-slate-200">Image sources</a>
     </div>
   )
 }

@@ -27,6 +27,12 @@ describe('answer matching', () => {
     }
   })
 
+  it('accepts the words in any order', () => {
+    const p = find('rebus-model-fallback')
+    for (const t of ['Model Fallback', 'Fallback Model', 'fallback-model']) expect(isAnswerCorrect(t, p), t).toBe(true)
+    expect(isAnswerCorrect('Fallback', p)).toBe(false)
+  })
+
   it('forgives small spelling mistakes', () => {
     expect(isAnswerCorrect('contxt windw', find('rebus-context-window'))).toBe(true)
     expect(isAnswerCorrect('hallucinashun', { answer: 'Hallucination' })).toBe(false) // too far
