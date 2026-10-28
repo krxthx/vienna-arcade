@@ -43,7 +43,7 @@ describe('evaluateHarness', () => {
     const r = evaluateHarness(cost, ['cache-checkpoint', null, null, null])
     expect(r.score).toBe(50)
     expect(r.verdict).toBe('partial')
-    expect(r.feedback.find((f) => f.kind === 'missing')?.text).toContain('Keep the unchanging')
+    expect(r.feedback.find((f) => f.kind === 'missing')?.text).toContain('identical, byte for byte')
   })
 
   it('scores an empty harness as zero and never negative', () => {

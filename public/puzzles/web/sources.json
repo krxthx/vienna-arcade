@@ -60,18 +60,6 @@
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
   },
   {
-    "file": "/puzzles/web/token.jpg",
-    "title": "Poker Chips (12370353025).jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:Poker_Chips_(12370353025).jpg",
-    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Poker_Chips_%2812370353025%29.jpg/960px-Poker_Chips_%2812370353025%29.jpg",
-    "author": "Debby Bycroft",
-    "license": "CC BY 2.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-    "description": "Poker Chips",
-    "date": "2011-05-24 00:00",
-    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
-  },
-  {
     "file": "/puzzles/web/network.png",
     "title": "NetworkTopology-FullyConnected.png",
     "source": "https://commons.wikimedia.org/wiki/File:NetworkTopology-FullyConnected.png",
@@ -81,18 +69,6 @@
     "licenseUrl": "",
     "description": "",
     "date": "",
-    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
-  },
-  {
-    "file": "/puzzles/web/budget.jpg",
-    "title": "Simple budgeting spreadsheet eg.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:Simple_budgeting_spreadsheet_eg.jpg",
-    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/93/Simple_budgeting_spreadsheet_eg.jpg/960px-Simple_budgeting_spreadsheet_eg.jpg",
-    "author": "Smallbones",
-    "license": "CC0",
-    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-    "description": "This is an example of a simple budgeting spreadsheet.  All text and figures are my own",
-    "date": "2014-06-23 13:36:15",
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
   },
   {
@@ -225,5 +201,27 @@
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "description": "Diagram of a neural network with input, hidden and output layers.",
     "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution."
+  },
+  {
+    "title": "Game Token (no cash value silver) (5645627811).jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Game_Token_(no_cash_value_silver)_(5645627811).jpg",
+    "author": "Mark Morgan from Trinidad",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "file": "/puzzles/web/game-token.jpg",
+    "description": "A silver game token.",
+    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution.",
+    "download": "https://commons.wikimedia.org/wiki/File:Game_Token_(no_cash_value_silver)_(5645627811).jpg"
+  },
+  {
+    "title": "Money saving growth.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Money_saving_growth.jpg",
+    "author": "nattanan",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "file": "/puzzles/web/money-jar.jpg",
+    "description": "Coins saved in a jar and in stacks, with plants growing from them.",
+    "modifications": "None; downloaded from Wikimedia Commons at its provided preview resolution.",
+    "download": "https://commons.wikimedia.org/wiki/File:Money_saving_growth.jpg"
   }
 ]

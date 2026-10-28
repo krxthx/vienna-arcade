@@ -2,7 +2,7 @@ import { ArrowRight, Check, Minus, Plus, X } from 'lucide-react'
 import { motion } from 'motion/react'
 import type { FeedbackKind, GameOutcome, HarnessResult, Scenario } from '../types'
 import type { Slots } from '../lib/harness'
-import { HarnessBoard } from './harness-board'
+import { ArchitectureDiagram } from './architecture-diagram'
 import { useCountUp } from './use-count-up'
 
 interface Props {
@@ -32,14 +32,7 @@ export function HarnessResultPanel({ scenario, slots, result, outcome, continueL
       className="mx-auto flex w-full max-w-6xl flex-col gap-5"
       onClick={skip}
     >
-      <HarnessBoard
-        slots={slots}
-        selectedId={null}
-        overSlot={null}
-        draggingId={null}
-        readOnly
-        statuses={result.placed}
-      />
+      <ArchitectureDiagram scenario={scenario} slots={slots} result={result} />
       <div className="grid gap-5 lg:grid-cols-[18rem_1fr]">
         <div className="flex flex-col items-center justify-center rounded-3xl border-2 border-ink-600 bg-ink-900 p-6 text-center">
           <p className="font-mono text-sm font-bold tracking-widest text-slate-300">{scenario.title.toUpperCase()}</p>

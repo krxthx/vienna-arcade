@@ -9,7 +9,7 @@ interface Props {
 /** Plain-language checklist of what the agent has to be able to do. Ticks as the harness grows. */
 export function MissionPanel({ scenario, status }: Props) {
   return (
-    <ul className="mt-3 flex flex-wrap gap-2" aria-label="What the agent needs to do">
+    <ul className="mt-3 flex flex-wrap gap-2" aria-label="Requirements">
       {scenario.needs.map((need, i) => (
         <li
           key={need.text}

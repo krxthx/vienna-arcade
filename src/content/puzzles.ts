@@ -253,8 +253,8 @@ export const PUZZLES: Puzzle[] = [
     id: 'rebus-token-budget',
     topic: 'Token optimization',
     tiles: [
-      pic('web/token.jpg', 'Casino tokens'),
-      pic('web/budget.jpg', 'A budgeting spreadsheet'),
+      pic('web/game-token.jpg', 'A game token'),
+      pic('web/money-jar.jpg', 'Money saved in a jar'),
     ],
     answer: 'Token Budget',
     hints: ['A limit on how much text a model can process or produce.', 'A token + a budget.'],
@@ -456,19 +456,6 @@ export const PUZZLES: Puzzle[] = [
     answer: 'Inference',
     hints: ['What happens when a trained model answers a request.', 'Say them out loud: “in” + “fur” + “ants”.'],
     explanation: 'In + fur + ants sounds like Inference: running a trained model to produce an answer.',
-    difficulty: 2,
-  },
-  {
-    id: 'rebus-opus',
-    topic: 'AI model names',
-    tiles: [
-      pic('octopus.png', 'An octopus'),
-      pic('oct-calendar.png', 'October on a calendar'),
-    ],
-    answer: 'Opus',
-    accept: ['Claude Opus'],
-    hints: ['A model name from Anthropic.', 'Octopus, without October.'],
-    explanation: 'Octopus minus Oct = Opus, a model name from Anthropic.',
     difficulty: 2,
   },
   {
