@@ -48,7 +48,7 @@ export const PUZZLES: Puzzle[] = [
     id: 'rebus-copilot',
     topic: 'AI assistants',
     tiles: [
-      pic('police-officer.png', 'A police officer'),
+      pic('web/police.jpg', 'A police officer standing by a patrol car'),
       pic('pilots.jpeg', 'An airline pilot'),
     ],
     answer: 'Copilot',

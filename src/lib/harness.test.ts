@@ -166,6 +166,15 @@ describe('content integrity', () => {
     for (const p of PUZZLES) expect(p.tiles.every((t) => t.image), p.id).toBe(true)
   })
 
+  it('does not give away the quiz answer by length', () => {
+    const longest = BONUS_QUESTIONS.filter((b) => b.correct.length > Math.max(...b.wrong.map((w) => w.length)))
+    expect(longest.length / BONUS_QUESTIONS.length).toBeLessThanOrEqual(1 / 3)
+    for (const b of BONUS_QUESTIONS) {
+      for (const w of b.wrong) expect(w.length / b.correct.length, b.id).toBeGreaterThan(0.5)
+      for (const w of b.wrong) expect(w.length / b.correct.length, b.id).toBeLessThan(2.5)
+    }
+  })
+
   it('has unique ids', () => {
     for (const bank of [SCENARIOS, PUZZLES, BONUS_QUESTIONS]) {
       expect(new Set(bank.map((x) => x.id)).size).toBe(bank.length)
