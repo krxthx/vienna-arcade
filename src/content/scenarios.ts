@@ -5,8 +5,8 @@ import type { Scenario } from '../types'
  * the game; no UI changes needed.
  * Each `need` is a capability in plain words; any component in its `by` list satisfies it.
  * Every choice (needs + optional + distractors) must have a `roles` line, and no
- * component may appear twice within a scenario. `sockets` is one per need (at least two), so
- * the canvas stays uncluttered. The model itself is always on the canvas.
+ * component may appear twice within a scenario. `sockets` is exactly one per need, so
+ * players can’t pad the harness with extras. The model itself is always on the canvas.
  */
 export const SCENARIOS: Scenario[] = [
   {
@@ -233,7 +233,7 @@ export const SCENARIOS: Scenario[] = [
     title: 'The Agent That Never Stops',
     job: "A public-facing agent has a tool that sends API calls. A user pastes a prompt that makes it call the tool again and again, and the cloud bill climbs by the minute. You cannot rely on wording in the system prompt to stop a determined user. How would you contain it?",
     difficulty: 3,
-    sockets: 2,
+    sockets: 1,
     needs: [
       { text: "There is a hard ceiling that no prompt can talk its way past", by: ['turn-limit'] },
     ],

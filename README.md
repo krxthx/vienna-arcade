@@ -1,6 +1,6 @@
 # The Vienna Arcade
 
-A booth-friendly arcade with two mini-games about Applied AI. Each play is 10 random rounds, with a name and email prompt first, a 4-question Vienna quiz after it, and a results screen. Scores go to a SQLite database through a tiny Node server, so several devices can share one leaderboard. There are no accounts, and no external services or network calls.
+A booth-friendly arcade with two mini-games about Applied AI. Each play covers every round in its bank, with a name and email prompt first, a 10-question Vienna quiz after it, and a results screen. Scores go to a SQLite database through a tiny Node server, so several devices can share one leaderboard. There are no accounts, and no external services or network calls.
 
 - **Architect the Agent** – read a plain-language mission, plug parts into a harness around the model (drag, or tap then tap), then run a deterministic evaluation.
 - **Find the Connection** – decode picture rebuses into AI terms; optional progressive hints.
@@ -87,7 +87,7 @@ Both games end with the Vienna quiz. How many Architect rounds, Connection puzzl
 
 A round is **passed** at a score of 85+: a harness mission earns "Harness Approved", and a connection puzzle needs no wrong guesses and at most one hint. Per round, the harness score is the share of the mission's needs covered, minus 15 per unneeded part; optional extras are never penalised and order doesn't matter. A connection puzzle starts at 100, minus 25 per wrong guess and 10 per hint (0 if the answer is revealed).
 
-**Leaderboard points** = rounds passed (of 10) + quiz answers right (of 4), so 14 at most. Players with equal points are ranked by **faster time** (from the first round to the end of the quiz). A running timer is shown from the first round until the quiz ends. It counts up, never down, and never adds or removes points, so there's no reason to rush.
+**Leaderboard points** = rounds passed (scaled to 10) + quiz answers right (of the quiz length). Players with equal points are ranked by **faster time** (from the first round to the end of the quiz). A running timer is shown from the first round until the quiz ends. It counts up, never down, and never adds or removes points, so there's no reason to rush.
 
 ## Booth details
 

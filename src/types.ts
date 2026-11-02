@@ -42,7 +42,7 @@ export interface Scenario {
   /** The mission, in one plain sentence about what the agent is asked to do. */
   job: string
   difficulty: Difficulty
-  /** Sockets around the model (at least needs.length). */
+  /** Sockets around the model (exactly one per need). */
   sockets: number
   needs: Need[]
   /** Reasonable extras: never penalised. */

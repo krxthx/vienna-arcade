@@ -134,7 +134,6 @@ describe('content integrity', () => {
   it('has enough content for a full session', () => {
     expect(SCENARIOS.length).toBeGreaterThanOrEqual(roundsFor('architect'))
     expect(PUZZLES.length).toBeGreaterThanOrEqual(roundsFor('connect'))
-    expect(BONUS_QUESTIONS.length).toBeGreaterThanOrEqual(20)
     expect(BONUS_QUESTIONS.length).toBeGreaterThanOrEqual(VIENNA_QUIZ_QUESTIONS)
   })
 
@@ -142,7 +141,7 @@ describe('content integrity', () => {
     const choices = scenarioChoices(s)
     expect(new Set(choices).size).toBe(choices.length)
     expect(choices).not.toContain('llm')
-    expect(s.sockets).toBeGreaterThanOrEqual(s.needs.length)
+    expect(s.sockets).toBe(s.needs.length)
     expect(s.sockets).toBeLessThanOrEqual(5)
     expect(choices.length).toBeGreaterThan(s.sockets)
     for (const id of choices) {

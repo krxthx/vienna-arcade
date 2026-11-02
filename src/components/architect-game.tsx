@@ -1,7 +1,7 @@
 import { Eraser, Play } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { HARNESS_COMPONENTS } from '../content/components'
-import { emptySlots, evaluateHarness, needsStatus, placeComponent, removeFromSlot, scenarioChoices } from '../lib/harness'
+import { emptySlots, evaluateHarness, placeComponent, removeFromSlot, scenarioChoices } from '../lib/harness'
 import type { Slots } from '../lib/harness'
 import { architectOutcome } from '../lib/outcome'
 import { RoundProgress } from './round-progress'
@@ -79,7 +79,7 @@ export function ArchitectGame({ scenario, round, onComplete }: Props) {
       <section className="rounded-2xl border-2 border-ink-600 bg-ink-900/95 p-4 sm:p-5">
         <RoundProgress number={round.number} total={round.total} compact />
         <h1 className="mt-2 text-lg font-black leading-snug text-white sm:text-xl lg:text-2xl">{scenario.job}</h1>
-        <MissionPanel scenario={scenario} status={needsStatus(scenario, slots)} />
+        <MissionPanel scenario={scenario} />
       </section>
 
       <div className="grid flex-1 gap-4 md:grid-cols-[15rem_minmax(0,1fr)] xl:grid-cols-[17rem_minmax(0,1fr)]">
