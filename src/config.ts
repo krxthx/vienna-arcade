@@ -7,4 +7,4 @@ export const ARCHITECT_ROUNDS = 1;
 export const CONNECT_ROUNDS = 3;
 
 /** Questions in the Vienna quiz that ends both games (picked at random from src/content/bonus.ts). */
-export const VIENNA_QUIZ_QUESTIONS = 4;
+export const VIENNA_QUIZ_QUESTIONS = 2;
